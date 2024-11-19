@@ -1,0 +1,48 @@
+body {
+    margin: 0;
+    font-family: 'Overpass';
+}
+
+:root {
+  --color-background-primary: #E9E9E9; /* Haupt-Hintergrund */
+  --color-background-secondary: #D9D9D9; /* Unterstützender Hintergrund */
+  --color-background-neutral: #FFFFFF; /* Weiß als neutraler Hintergrund */
+  --color-accent: #FFA92E; /* Akzentfarbe */
+  --color-text-secondary: #FFFFFF; /* Weißer Text */
+
+  --z-index-background: 1;
+  --z-index-content: 3;
+}
+
+ /* overpass-regular - latin */
+ @font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Overpass';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../assets/fonts/overpass-v13-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  }
+  /* overpass-600 - latin */
+  @font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Overpass';
+    font-style: normal;
+    font-weight: 600;
+    src: url('../assets/fonts/overpass-v13-latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  }
+  /* overpass-700 - latin */
+  @font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Overpass';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../assets/fonts/overpass-v13-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  }
+  /* overpass-800 - latin */
+  @font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Overpass';
+    font-style: normal;
+    font-weight: 800;
+    src: url('../assets/fonts/overpass-v13-latin-800.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  }
