@@ -1,0 +1,55 @@
+@import "../../styles/mixins.scss";
+
+.products {
+  @include flex-container(row, space-between, stretch, 48px);
+  padding: 24px 80px;
+  box-sizing: border-box;
+  height: 100vh;
+
+  .products-text {
+    width: 50%;
+    @include flex-container(column, center, center);
+    text-align: left;
+    height: 100%;
+  }
+
+  .products-grid {
+    @include flex-container(row, flex-start, stretch, 16px, wrap);
+    width: 50%;
+    height: 100%;
+    box-sizing: border-box;
+
+    .product-card {
+      flex: 1 1 calc(50% - 8px);
+      height: calc(50% - 8px);
+      position: relative;
+      @include flex-container(row, center, center);
+      overflow: hidden;
+
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: var(--z-index-background);
+      }
+
+      .low-opacity {
+        opacity: 0.5;
+      }
+
+      .product-overlay {
+        position: relative;
+        z-index: var(--z-index-content);
+        text-align: center;
+
+        h3 {
+          margin: 0;
+          font-size: 36px;
+        }
+      }
+    }
+  }
+}
