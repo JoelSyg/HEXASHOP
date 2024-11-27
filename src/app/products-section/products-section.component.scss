@@ -5,6 +5,9 @@
   padding: 24px 80px;
   box-sizing: border-box;
   height: 100vh;
+  box-shadow: 
+    2px 2px 24px rgba(0, 0, 0, 0.15),
+    -2px -2px 24px rgba(0, 0, 0, 0.15); 
 
   .products-text {
     width: 50%;
