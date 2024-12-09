@@ -92,11 +92,12 @@
 
     .container-bottom-right {
       z-index: 3;
-      gap: 14px;
       width: 75%;
       margin-left: 16px;
       height: 100%;
-      @include flex-container(column);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
 
       .box-core {
         height: 50%;
