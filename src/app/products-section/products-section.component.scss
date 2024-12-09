@@ -5,15 +5,31 @@
   padding: 24px 80px;
   box-sizing: border-box;
   height: 100vh;
-  box-shadow: 
-    2px 2px 24px rgba(0, 0, 0, 0.15),
-    -2px -2px 24px rgba(0, 0, 0, 0.15); 
+  box-shadow: 2px 2px 24px rgba(0, 0, 0, 0.15); // Nur der obere Schatten bleibt hier
+
+  position: relative;
+  
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -24px; // Höhe und Abstand für den unteren Schatten
+    left: 0;
+    width: 100%;
+    height: 24px; // Höhe des Bereichs für den unteren Schatten
+    background: var(--color-background-primary);
+    box-shadow: 2px 2px 24px rgba(0, 0, 0, 0.15); // Der untere Schatten
+    z-index: -1;
+  }
 
   .products-text {
     width: 50%;
     @include flex-container(column, center, center);
     text-align: left;
     height: 100%;
+
+    h2 {
+      font-size: 36px;
+    }
   }
 
   .products-grid {
