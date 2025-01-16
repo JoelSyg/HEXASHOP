@@ -2,21 +2,21 @@
   <img src="./assets/img/hexashop_logo.svg" alt="" />
   <div class="header-links">
     <a [routerLink]="['']">Home</a>
-    <a [routerLink]="['']">Men's</a>
-    <a [routerLink]="['']">Women's</a>
-    <a [routerLink]="['']">Kid's</a>
-    <a [routerLink]="['about-us']">About Us</a>
+    <a [routerLink]="['/mens-clothing']">Men's</a>
+    <a [routerLink]="['/womens-clothing']">Women's</a>
+    <a [routerLink]="['/kids-clothing']">Kid's</a>
+    <a [routerLink]="['/about-us']">About Us</a>
     <a [routerLink]="['']">Contact Us</a>
   </div>
   <div class="header-right-section">
-  <img class="user-icon" src="./assets/img/user.svg" alt="">
-  <div class="shopping-cart">
-    <a [routerLink]="['']">
-      <div>
-        <img src="./assets/img/shopping_bag.svg" alt="" />
+    <img class="user-icon" src="./assets/img/user.svg" alt="" />
+    <div class="shopping-cart">
+      <a [routerLink]="['']">
+        <div>
+          <img src="./assets/img/shopping_bag.svg" alt="" />
           <span class="cart-items-number">1</span>
-      </div>
-    </a>
-  </div>
+        </div>
+      </a>
+    </div>
   </div>
 </header>

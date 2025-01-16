@@ -1,0 +1,40 @@
+<app-header></app-header>
+
+@if (isLoading()) {
+<div class="loading-background"></div>
+} @else {
+
+<div class="wrapper">
+  <section>
+    <h2>{{ category | titlecase }} Latest</h2>
+    <div class="products-container">
+      <div class="products-div">
+        @for (item of latestItems(); track item.id) {
+        <app-product-box
+          [itemName]="item.name"
+          [itemImage]="item.image"
+          [itemPrice]="item.price"
+        ></app-product-box>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>{{ category | titlecase }} Casual</h2>
+    <div class="products-container">
+      <div class="products-div">
+        @for (item of casualItems(); track item.id) {
+        <app-product-box
+          [itemName]="item.name"
+          [itemImage]="item.image"
+          [itemPrice]="item.price"
+        ></app-product-box>
+        }
+      </div>
+    </div>
+  </section>
+</div>
+}
+
+<app-footer></app-footer>
