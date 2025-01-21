@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ShopItem } from '../types/shop-item.interface';
 import { ItemService } from '../services/item-service.service';
 import { ProductBoxComponent } from '../product-box/product-box.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HeaderComponent } from '../shared/header/header.component';
 import { FooterComponent } from '../shared/footer/footer.component';
 
@@ -15,6 +15,7 @@ import { FooterComponent } from '../shared/footer/footer.component';
     ProductBoxComponent,
     HeaderComponent,
     FooterComponent,
+    RouterModule,
   ],
   templateUrl: './category-clothing.component.html',
   styleUrls: ['./category-clothing.component.scss'],

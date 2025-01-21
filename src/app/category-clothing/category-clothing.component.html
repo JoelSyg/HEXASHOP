@@ -10,11 +10,13 @@
     <div class="products-container">
       <div class="products-div">
         @for (item of latestItems(); track item.id) {
-        <app-product-box
-          [itemName]="item.name"
-          [itemImage]="item.image"
-          [itemPrice]="item.price"
-        ></app-product-box>
+        <a [routerLink]="['/single-item-page', item.id]">
+          <app-product-box
+            [itemName]="item.name"
+            [itemImage]="item.image"
+            [itemPrice]="item.price"
+          ></app-product-box>
+        </a>
         }
       </div>
     </div>

@@ -29,6 +29,11 @@
     justify-content: flex-start;
     margin-right: -16px;
 
+    a {
+      text-decoration: none;
+      color: black;
+    }
+
     > * {
       flex: 1 1 calc(25% - 16px);
       max-width: calc(25% - 16px);
