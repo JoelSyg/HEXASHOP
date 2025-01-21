@@ -14,7 +14,9 @@
       <a [routerLink]="['']">
         <div>
           <img src="./assets/img/shopping_bag.svg" alt="" />
-          <span class="cart-items-number">1</span>
+          @if (cartItemsNumber > 0) {
+          <span class="cart-items-number">{{ cartItemsNumber }}</span>
+          }
         </div>
       </a>
     </div>

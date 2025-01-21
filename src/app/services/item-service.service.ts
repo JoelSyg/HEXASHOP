@@ -23,4 +23,8 @@ export class ItemService {
   getFilteredItems(): ShopItem[] {
     return this.itemsSig();
   }
+
+  getItemById(id: string): ShopItem | undefined {
+    return this.itemsSig().find((item) => item.id === id);
+  }
 }

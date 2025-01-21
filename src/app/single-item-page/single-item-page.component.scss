@@ -1,0 +1,64 @@
+.wrapper {
+  height: calc(100vh - 90px);
+  max-width: 100vw;
+}
+
+img {
+  max-height: 200px;
+}
+
+.size-buttons.error button {
+  border-color: red;
+  animation: shake 0.3s ease;
+}
+
+.size-buttons button.selected {
+  border-color: black;
+}
+
+.size-buttons button {
+  border: 2px solid gray;
+  padding: 10px 15px;
+  cursor: pointer;
+  background: none;
+  transition: border-color 0.3s ease;
+}
+
+.size-buttons button:hover {
+  border-color: black;
+}
+
+.size-buttons button.unavailable {
+  border-color: rgb(190, 190, 190);
+  background-color: rgba(231, 231, 231, 0.582);
+  color: rgb(153, 153, 153);
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+}
+
+.product-container {
+  .product-details {
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -6,4 +6,5 @@ export interface ShopItem {
     price: number;
     description?: string;
     image: string;
+    sizes: Record<string, boolean>;
 }

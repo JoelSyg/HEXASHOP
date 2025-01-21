@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-product-box',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './product-box.component.html',
   styleUrls: ['./product-box.component.scss'],
 })
