@@ -1,5 +1,5 @@
 <header>
-  <img src="./assets/img/hexashop_logo.svg" alt="" />
+  <img src="./assets/img/hexashop_logo.svg" alt="Hexashop Logo" />
   <div class="header-links">
     <a [routerLink]="['']">Home</a>
     <a [routerLink]="['/mens-clothing']">Men's</a>
@@ -9,16 +9,42 @@
     <a [routerLink]="['']">Contact Us</a>
   </div>
   <div class="header-right-section">
-    <img class="user-icon" src="./assets/img/user.svg" alt="" />
-    <div class="shopping-cart">
-      <a [routerLink]="['']">
-        <div>
-          <img src="./assets/img/shopping_bag.svg" alt="" />
-          @if (cartItemsNumber > 0) {
-          <span class="cart-items-number">{{ cartItemsNumber }}</span>
-          }
+    <img class="user-icon" src="./assets/img/user.svg" alt="User Icon" />
+    <div
+      class="shopping-cart"
+      [class.no-hover]="isShoppingCartPage"
+      [class.visible]="isCartOpen"
+    >
+      <div>
+        <a [routerLink]="['/shopping-cart-page']">
+          <img src="./assets/img/shopping_bag.svg" alt="Shopping Bag" />
+        </a>
+        @if (cartItemsNumber > 0) {
+        <span class="cart-items-number">{{ cartItemsNumber }}</span>
+        }
+      </div>
+      <div class="opened-shopping-cart" [class.visible]="isCartOpen">
+        @if ((cartItems$ | async)?.length === 0) {
+        <p>Your bag is empty</p>
+        } @else { @for (item of (cartItems$ | async); track item) {
+        <li>
+          {{ item.name }} - {{ item.price | currency }}
+          {{ item.chosenSize }}
+          {{ item.quantity }}
+          <button (click)="removeItem(item)">X</button>
+        </li>
+        }
+        <div class="summary">
+          <p>Delivery {{ shippingCost$ | async | currency }}</p>
+          <p>
+            <strong>Total {{ finalTotal$ | async | currency }}</strong>
+          </p>
         </div>
-      </a>
+        <a [routerLink]="['/shopping-cart-page']">
+          <button>Go to bag</button>
+        </a>
+        }
+      </div>
     </div>
   </div>
 </header>

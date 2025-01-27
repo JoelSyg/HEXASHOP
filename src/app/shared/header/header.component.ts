@@ -1,22 +1,67 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit, HostListener } from '@angular/core';
+import { Router, NavigationEnd, Event as RouterEvent } from '@angular/router'; // Event importiert
 import { ShoppingCartService } from '../../services/shopping-cart.service';
+import { filter } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { ShopItem } from '../../types/shop-item.interface';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  cartItemsNumber: number = 0;
+  shippingCost$ = this.shoppingCartService.shippingCost$;
+  finalTotal$ = this.shoppingCartService.finalTotal$;
+  cartItems$ = this.shoppingCartService.cartItems$;
 
-  constructor(private shoppingCartService: ShoppingCartService) {}
+  cartItemsNumber: number = 0;
+  isCartOpen: boolean = false;
+  isShoppingCartPage: boolean = false;
+
+  constructor(
+    private shoppingCartService: ShoppingCartService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.shoppingCartService.cartItemCount$.subscribe((count) => {
       this.cartItemsNumber = count;
     });
+
+    this.shoppingCartService.cartOpen$.subscribe((isOpen) => {
+      this.isCartOpen = isOpen;
+    });
+
+    this.router.events
+      .pipe(filter((event: RouterEvent) => event instanceof NavigationEnd))
+      .subscribe((event: RouterEvent) => {
+        const navEnd = event as NavigationEnd;
+        console.log('Aktuelle Route:', navEnd.url);
+        this.isShoppingCartPage = navEnd.url === '/shopping-cart-page';
+      });
+
+    this.isShoppingCartPage = this.router.url === '/shopping-cart-page';
+  }
+
+  removeItem(item: ShopItem) {
+    this.shoppingCartService.removeItem(item);
+  }
+
+  @HostListener('document:click', ['$event'])
+  handleClickOutside(event: Event) {
+    const target = event.target as HTMLElement;
+
+    const clickedOnBagIcon = target.matches('.shopping-cart img');
+
+    const clickedInsideCart =
+      target.closest('.shopping-cart') && !clickedOnBagIcon;
+
+    if (this.isCartOpen && (!clickedInsideCart || clickedOnBagIcon)) {
+      this.shoppingCartService.closeCart();
+    }
   }
 }

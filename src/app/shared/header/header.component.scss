@@ -4,7 +4,7 @@ header {
   justify-content: space-between;
   height: 90px;
   background-color: #d9d9d9;
-  padding: 0 80px;
+  padding: 0 74px 0px 80px;
 
   .header-links {
     position: absolute;
@@ -27,22 +27,47 @@ header {
 
   .header-right-section {
     display: flex;
-    gap: 24px;
+    gap: 16px;
+
     .user-icon {
       height: 39px;
+      padding: 6px;
     }
 
     .shopping-cart {
       position: relative;
+      border: 2px solid #d9d9d9;
+      padding: 4px;
+      z-index: 11;
 
-      img {
+      &:hover,
+      &.visible {
+        border: 2px solid black;
+        border-bottom: 2px solid transparent;
+        background-color: white;
+
+        .opened-shopping-cart {
+          display: block;
+        }
+      }
+
+      &.no-hover {
+        border: 2px solid #d9d9d9;
+        background-color: transparent;
+
+        .opened-shopping-cart {
+          display: none;
+        }
+      }
+
+      a img {
         height: 36px;
       }
 
       .cart-items-number {
         position: absolute;
-        right: -2px;
-        top: -2px;
+        right: 2px;
+        top: 2px;
         font-size: 14px;
         color: white;
         background-color: red;
@@ -55,6 +80,33 @@ header {
         align-items: center;
         text-align: center;
         box-sizing: border-box;
+      }
+
+      .opened-shopping-cart {
+        position: absolute;
+        border: 2px solid black;
+        min-width: 370px;
+        min-height: 200px;
+        z-index: 10;
+        top: 46px;
+        right: -2px;
+        background-color: white;
+        display: none;
+
+        &.visible {
+          display: block;
+        }
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: -3px;
+          left: 326px;
+          right: 0;
+          height: 4px;
+          background-color: white;
+          z-index: 11;
+        }
       }
     }
   }
