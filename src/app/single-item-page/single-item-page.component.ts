@@ -75,7 +75,7 @@ export class SingleItemPageComponent implements OnInit {
     }
   }
 
-  private processSizes(loadedItem: any): void {
+  private processSizes(loadedItem: ShopItem): void {
     const sizesWithAvailability = this.getSizesWithAvailability(loadedItem);
     this.sizes.set(sizesWithAvailability);
 
@@ -84,9 +84,9 @@ export class SingleItemPageComponent implements OnInit {
   }
 
   private getSizesWithAvailability(
-    loadedItem: any
+    loadedItem: ShopItem
   ): { name: string; available: boolean }[] {
-    const STANDARD_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+    const STANDARD_SIZES = ['S', 'M', 'L', 'XL', 'XXL'];
     const itemSizes = loadedItem.sizes || {};
 
     const sizes = STANDARD_SIZES.map((size) => ({
@@ -102,7 +102,7 @@ export class SingleItemPageComponent implements OnInit {
   }
 
   private shouldAddOneSize(
-    itemSizes: any,
+    itemSizes: Record<string, boolean>,
     sizes: { name: string; available: boolean }[]
   ): boolean {
     const isOneSizeAvailable = !!itemSizes['ONESIZE'];
@@ -140,12 +140,25 @@ export class SingleItemPageComponent implements OnInit {
     }
     this.showSizeError.set(false);
 
-    if (this.item()) {
-      this.shoppingCartService.addItem({
-        ...this.item(),
-        size: this.isOneSize() ? 'ONESIZE' : this.selectedSize(),
-      });
-      console.log('Item hinzugefügt:', this.item());
+    const currentItem = this.item();
+
+    if (currentItem) {
+      const itemToAdd: ShopItem = {
+        ...currentItem,
+        id: currentItem.id ?? '',
+        chosenSize: this.isOneSize()
+          ? 'ONESIZE'
+          : this.selectedSize() ?? undefined,
+        quantity: 1,
+      };
+
+      this.shoppingCartService.addItem(itemToAdd);
+
+      setTimeout(() => {
+        this.shoppingCartService.openCart();
+      }, 100);
+
+      console.log('Item hinzugefügt:', itemToAdd);
     } else {
       console.error('Kein Item zum Hinzufügen gefunden.');
     }

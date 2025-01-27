@@ -2,19 +2,18 @@
 <div class="wrapper">
   @if (isLoading()) { } @else { @if (item()) {
   <div class="product-container">
-    <!-- Bildbereich -->
     <div class="product-image">
       <img [src]="item()?.image" alt="{{ item()?.name }}" />
     </div>
     <div class="product-details">
       <h1>{{ item()?.name }}</h1>
-      <p>Preis: {{ item()?.price | currency }}</p>
+      <p>Price: {{ item()?.price | currency }}</p>
       <p>{{ item()?.description }}</p>
     </div>
 
     <div class="size-selection">
       @if (isOneSize()) {
-      <p class="onesize-label">Größe: Einheitsgröße</p>
+      <p class="onesize-label">Size: One size</p>
       } @else {
       <div class="size-buttons" [class.error]="showSizeError()">
         @for (size of sizes(); track size.name) {
@@ -28,18 +27,18 @@
         }
       </div>
       @if (showSizeError()) {
-      <p class="error-message">Bitte wähle eine Größe.</p>
+      <p class="error-message">Please select a size.</p>
       } }
     </div>
 
     <div class="actions">
       <button [disabled]="isCartButtonDisabled()" (click)="addItemToCart()">
-        In den Warenkorb
+        Add to Cart
       </button>
     </div>
   </div>
   } @else {
-  <p>Artikel nicht gefunden. Bitte überprüfen Sie die URL.</p>
+  <p>Item not found. Please check the URL.</p>
   } }
 </div>
 <app-footer></app-footer>
