@@ -25,24 +25,61 @@
       </div>
       <div class="opened-shopping-cart" [class.visible]="isCartOpen">
         @if ((cartItems$ | async)?.length === 0) {
-        <p>Your bag is empty</p>
-        } @else { @for (item of (cartItems$ | async); track item) {
-        <li>
-          {{ item.name }} - {{ item.price | currency }}
-          {{ item.chosenSize }}
-          {{ item.quantity }}
-          <button (click)="removeItem(item)">X</button>
-        </li>
-        }
-        <div class="summary">
-          <p>Delivery {{ shippingCost$ | async | currency }}</p>
-          <p>
-            <strong>Total {{ finalTotal$ | async | currency }}</strong>
-          </p>
+          <div class="empty-cart">
+            <div class="empty-cart-top">
+        <h1>Your bag is empty</h1>
+        <p>Start adding your favorites to fill it up!</p>
+          </div>
+          <div class="empty-cart-bottom">
+            <p>Don't know where to start?</p>
+            <a [routerLink]="['']"> <button>See what's new</button> </a>
+          </div>
+          </div>
+        } @else {
+        <h1>Your bag</h1>
+        <div class="cart-products">
+          @for (item of (cartItems$ | async); track item.id; let last = $last;) {
+          <div class="cart-single-product">
+            <div class="cart-product-image">
+              <img [src]="item.image" alt="{{ item.name }}" />
+            </div>
+            <div class="cart-product-details">
+              <h2>{{ item.name }}</h2>
+              <p>
+                <b>{{ item.price | currency }}</b>
+              </p>
+              <p class="color-gray">Size: {{ item.chosenSize }}</p>
+              <p>quantity: {{ item.quantity }}</p>
+            </div>
+            <div>
+              <button class="remove-button" (click)="removeItem(item)">
+                <img src="./assets/img/close.png" alt="" />
+              </button>
+            </div>
+            @if (!last) {
+            <div class="product-seperator"></div>
+            }
+          </div>
+          }
         </div>
-        <a [routerLink]="['/shopping-cart-page']">
-          <button>Go to bag</button>
-        </a>
+        <div class="cart-bottom">
+          <div class="summary">
+            <div class="cart-delivery">
+              <p>Delivery</p>
+              <p>{{ shippingCost$ | async | currency }}</p>
+            </div>
+            <div class="cart-total">
+              <div>
+                <strong>Total</strong>
+                <p class="color-gray">VAT included</p>
+              </div>
+              <strong>{{ finalTotal$ | async | currency }}</strong>
+            </div>
+          </div>
+          <a [routerLink]="['/shopping-cart-page']">
+            <button>Go to bag</button>
+          </a>
+        </div>
         }
       </div>
     </div>
