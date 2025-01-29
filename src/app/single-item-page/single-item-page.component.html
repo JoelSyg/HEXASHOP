@@ -5,36 +5,44 @@
     <div class="product-image">
       <img [src]="item()?.image" alt="{{ item()?.name }}" />
     </div>
-    <div class="product-details">
-      <h1>{{ item()?.name }}</h1>
-      <p>Price: {{ item()?.price | currency }}</p>
-      <p>{{ item()?.description }}</p>
-    </div>
-
-    <div class="size-selection">
-      @if (isOneSize()) {
-      <p class="onesize-label">Size: One size</p>
-      } @else {
-      <div class="size-buttons" [class.error]="showSizeError()">
-        @for (size of sizes(); track size.name) {
-        <button
-          (click)="selectSize(size.name)"
-          [class.selected]="selectedSize() === size.name"
-          [class.unavailable]="!size.available"
-        >
-          {{ size.name }}
-        </button>
-        }
+    <div class="product-else">
+      <div class="product-details">
+        <h1>{{ item()?.name }}</h1>
+        <p class="price-p">{{ item()?.price | currency }}</p>
       </div>
-      @if (showSizeError()) {
-      <p class="error-message">Please select a size.</p>
-      } }
-    </div>
 
-    <div class="actions">
-      <button [disabled]="isCartButtonDisabled()" (click)="addItemToCart()">
-        Add to Cart
-      </button>
+      <div class="size-selection">
+        @if (isOneSize()) {
+        <p class="onesize-label">Size: One size</p>
+        } @else {
+          <span class="size-span" [class.error]="showSizeError()">Select size</span>
+        <div class="size-buttons" [class.error]="showSizeError()">
+          @for (size of sizes(); track size.name) {
+          <button
+            (click)="selectSize(size.name)"
+            [class.selected]="selectedSize() === size.name"
+            [class.unavailable]="!size.available"
+          >
+            {{ size.name }}
+          </button>
+          }
+        </div>
+        <div class="error-message">
+          @if (showSizeError()) {
+          <p>Please select a size.</p>
+        } </div> }
+      </div>
+
+      <div class="actions">
+        <button [disabled]="isCartButtonDisabled()" (click)="addItemToCart()">
+          Add to bag
+        </button>
+      </div>
+
+      <div class="product-description">
+        <p>{{ item()?.description }}</p>
+      </div>
+
     </div>
   </div>
   } @else {
