@@ -5,11 +5,12 @@ import { ShoppingCartService } from '../services/shopping-cart.service';
 import { CommonModule } from '@angular/common';
 import { ShopItem } from '../types/shop-item.interface';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-shopping-cart-page',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, CommonModule, FormsModule],
+  imports: [HeaderComponent, FooterComponent, CommonModule, FormsModule, RouterModule],
   templateUrl: './shopping-cart-page.component.html',
   styleUrls: ['./shopping-cart-page.component.scss'],
 })

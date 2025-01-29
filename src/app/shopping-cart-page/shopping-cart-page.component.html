@@ -38,6 +38,7 @@
     <p>Subtotal {{ cartTotal$ | async | currency }}</p>
     <p>Delivery {{ shippingCost$ | async | currency }}</p>
     <p><strong>Total {{ finalTotal$ | async | currency }}</strong></p>
+    <a [routerLink]="['/checkout']"><button>Go to checkout</button></a>
   </div>
 }
 </div>

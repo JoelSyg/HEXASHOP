@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth'; //  Auth importieren
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 
 import { environment } from '../environments/environment';
@@ -17,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     importProvidersFrom([
       provideFirebaseApp(() => initializeApp(firebaseConfig)),
+      provideAuth(() => getAuth()), //  Auth-Provider hinzufügen
       provideFirestore(() => getFirestore()),
     ]),
   ],

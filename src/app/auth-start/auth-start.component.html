@@ -1,0 +1,16 @@
+
+  
+  <div class="auth-start-container">
+    <h2>Willkommen</h2>
+    <p>Gib deine E-Mail-Adresse ein, um dich einzuloggen oder zu registrieren.</p>
+  
+    <input type="email" placeholder="E-Mail" [(ngModel)]="email">
+    <button (click)="checkEmail()" [disabled]="isLoading()">
+      @if (isLoading()) { Lädt... } @else { Weiter }
+    </button>
+  
+    @if (errorMessage()) {
+      <p class="error">{{ errorMessage() }}</p>
+    }
+  </div>
+  

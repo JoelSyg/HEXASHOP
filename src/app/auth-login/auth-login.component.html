@@ -1,0 +1,16 @@
+<div class="auth-container">
+    <button (click)="goBack()">← Zurück</button>
+    <h2>Passwort eingeben</h2>
+  
+    <input type="email" [value]="email()" readonly>
+    <input type="password" placeholder="Passwort" [(ngModel)]="password">
+  
+    <button (click)="login()" [disabled]="isLoading()">
+      @if (isLoading()) { Lädt... } @else { Einloggen }
+    </button>
+  
+    @if (errorMessage()) {
+      <p class="error">{{ errorMessage() }}</p>
+    }
+  </div>
+  
