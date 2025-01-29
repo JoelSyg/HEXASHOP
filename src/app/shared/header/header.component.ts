@@ -56,11 +56,12 @@ export class HeaderComponent implements OnInit {
     const target = event.target as HTMLElement;
 
     const clickedOnBagIcon = target.matches('.shopping-cart img');
+    const clickedOnToBagButton = target.matches('toBagButton')
 
     const clickedInsideCart =
       target.closest('.shopping-cart') && !clickedOnBagIcon;
 
-    if (this.isCartOpen && (!clickedInsideCart || clickedOnBagIcon)) {
+    if (this.isCartOpen && (!clickedInsideCart || clickedOnBagIcon || clickedOnToBagButton)) {
       this.shoppingCartService.closeCart();
     }
   }
