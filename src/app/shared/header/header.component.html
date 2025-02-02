@@ -9,7 +9,9 @@
     <a [routerLink]="['']">Contact Us</a>
   </div>
   <div class="header-right-section">
-    <img class="user-icon" src="./assets/img/user.svg" alt="User Icon" />
+    <a (click)="goToProfile()">
+      <img class="user-icon" src="./assets/img/user.svg" alt="User Icon" />
+    </a>
     <div
       class="shopping-cart"
       [class.no-hover]="isShoppingCartPage"
@@ -25,20 +27,21 @@
       </div>
       <div class="opened-shopping-cart" [class.visible]="isCartOpen">
         @if ((cartItems$ | async)?.length === 0) {
-          <div class="empty-cart">
-            <div class="empty-cart-top">
-        <h1>Your bag is empty</h1>
-        <p>Start adding your favorites to fill it up!</p>
+        <div class="empty-cart">
+          <div class="empty-cart-top">
+            <h1>Your bag is empty</h1>
+            <p>Start adding your favorites to fill it up!</p>
           </div>
           <div class="empty-cart-bottom">
             <p>Don't know where to start?</p>
             <a [routerLink]="['']"> <button>See what's new</button> </a>
           </div>
-          </div>
+        </div>
         } @else {
         <h1>Your bag</h1>
         <div class="cart-products">
-          @for (item of (cartItems$ | async); track item.id; let last = $last;) {
+          @for (item of (cartItems$ | async); track item.id; let last = $last;)
+          {
           <div class="cart-single-product">
             <div class="cart-product-image">
               <img [src]="item.image" alt="{{ item.name }}" />

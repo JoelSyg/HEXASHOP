@@ -1,10 +1,11 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, inject } from '@angular/core';
 import { Router, NavigationEnd, Event as RouterEvent } from '@angular/router'; // Event importiert
 import { ShoppingCartService } from '../../services/shopping-cart.service';
 import { filter } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ShopItem } from '../../types/shop-item.interface';
+import { UserFirebaseService } from '../../services/user-firebase.service';
 
 @Component({
   selector: 'app-header',
@@ -17,14 +18,16 @@ export class HeaderComponent implements OnInit {
   shippingCost$ = this.shoppingCartService.shippingCost$;
   finalTotal$ = this.shoppingCartService.finalTotal$;
   cartItems$ = this.shoppingCartService.cartItems$;
+  private userService = inject(UserFirebaseService);
 
+  currentUser = this.userService.currentUser;
   cartItemsNumber: number = 0;
   isCartOpen: boolean = false;
   isShoppingCartPage: boolean = false;
 
   constructor(
     private shoppingCartService: ShoppingCartService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -49,6 +52,14 @@ export class HeaderComponent implements OnInit {
 
   removeItem(item: ShopItem) {
     this.shoppingCartService.removeItem(item);
+  }
+
+  goToProfile() {
+    if (this.currentUser()) {
+      this.router.navigate(['/profile']); // Falls eingeloggt → Profilseite
+    } else {
+      this.router.navigate(['/auth']); // Falls nicht eingeloggt → Login/Register
+    }
   }
 
   @HostListener('document:click', ['$event'])

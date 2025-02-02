@@ -1,0 +1,11 @@
+<div class="profile-container">
+    @if (currentUser()) {
+      <h2>Willkommen, {{ currentUser()?.name }}</h2>
+      <p>Rolle: {{ currentUser()?.role ? 'Admin' : 'User' }}</p>
+      <button (click)="logout()">Logout</button>
+    } @else {
+      <p>Du bist nicht eingeloggt.</p>
+      <a routerLink="/auth">Jetzt anmelden</a>
+    }
+  </div>
+  

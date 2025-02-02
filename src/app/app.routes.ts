@@ -11,6 +11,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { AuthStartComponent } from './auth-start/auth-start.component';
 import { AuthRegisterComponent } from './auth-register/auth-register.component';
 import { AuthLoginComponent } from './auth-login/auth-login.component';
+import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = [
     { path: '', component: MainPageComponent},
@@ -28,4 +29,5 @@ export const routes: Routes = [
 
     { path: 'checkout', component: CheckoutComponent, canActivate: [authGuard] },
     { path: 'admin', component: AdminComponent, canActivate: [authGuard, adminGuard] },
+    { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
 ];

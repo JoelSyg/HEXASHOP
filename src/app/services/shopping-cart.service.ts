@@ -2,6 +2,9 @@ import { Injectable, Inject, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { ShopItem } from '../types/shop-item.interface.js';
+import { UserFirebaseService } from './user-firebase.service.js';
+import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +30,7 @@ export class ShoppingCartService implements OnDestroy {
 
   private isBrowser: boolean;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private userService: UserFirebaseService, private firestore: Firestore) {
     this.isBrowser = isPlatformBrowser(this.platformId);
 
     if (this.isBrowser) {
@@ -39,24 +42,26 @@ export class ShoppingCartService implements OnDestroy {
   addItem(item: ShopItem) {
     const currentItems = this.cartItemsSubject.getValue();
     const existingItemIndex = currentItems.findIndex(
-      (cartItem) =>
-        cartItem.id === item.id && cartItem.chosenSize === item.chosenSize
+      (cartItem) => cartItem.id === item.id && cartItem.chosenSize === item.chosenSize
     );
-
+  
     if (existingItemIndex > -1) {
       const updatedItems = [...currentItems];
-      updatedItems[existingItemIndex].quantity =
-        Number(updatedItems[existingItemIndex].quantity || 1) + 1;
+      updatedItems[existingItemIndex].quantity = Number(updatedItems[existingItemIndex].quantity || 1) + 1;
       this.cartItemsSubject.next(updatedItems);
     } else {
       this.cartItemsSubject.next([...currentItems, { ...item, quantity: 1 }]);
     }
-
+  
     this.updateCartItemCount();
     this.updateCartTotal();
     this.saveCartToStorage();
     this.openCart();
+  
+    //  Falls User eingeloggt ist, in Firestore speichern
+    this.userService.currentUser() && this.saveCartToFirestore();
   }
+  
 
   removeItem(item: ShopItem) {
     const updatedItems = this.cartItemsSubject
@@ -149,6 +154,25 @@ export class ShoppingCartService implements OnDestroy {
       }
     }
   }
+
+  async saveCartToFirestore(cartItems?: ShopItem[]) {
+    const user = this.userService.currentUser();
+    if (!user) return; // Falls nicht eingeloggt, nichts tun
+  
+    const cartToSave: ShopItem[] = cartItems || this.cartItemsSubject.getValue(); // Falls kein Argument übergeben, den aktuellen Warenkorb nehmen
+    const userRef = doc(this.firestore, `users/${user.email}`);
+    await setDoc(userRef, { cart: cartToSave }, { merge: true }); //  Warenkorb in Firestore speichern
+  }
+  
+  
+
+  setCartFromFirestore(cartItems: ShopItem[]) {
+    this.cartItemsSubject.next(cartItems);
+    this.updateCartItemCount();
+    this.updateCartTotal();
+  }
+  
+  
 
   private handlePopState = () => {
     this.closeCart();

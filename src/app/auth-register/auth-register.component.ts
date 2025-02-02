@@ -17,6 +17,8 @@ export class AuthRegisterComponent {
 
   email = signal('');
   password = signal('');
+  name = signal('');
+  surname = signal('');
   isLoading = signal(false);
   errorMessage = signal('');
 
@@ -32,7 +34,12 @@ export class AuthRegisterComponent {
     this.errorMessage.set('');
 
     try {
-      await this.userService.handleAuth(this.email(), this.password());
+      await this.userService.handleAuth(
+        this.email(),
+        this.password(),
+        this.name(),
+        this.surname()
+      );
     } catch (error) {
       this.errorMessage.set('Registrierung fehlgeschlagen. Passwort zu kurz?');
     }
