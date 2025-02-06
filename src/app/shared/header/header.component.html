@@ -9,9 +9,39 @@
     <a [routerLink]="['']">Contact Us</a>
   </div>
   <div class="header-right-section">
-    <a (click)="goToProfile()">
-      <img class="user-icon" src="./assets/img/user.svg" alt="User Icon" />
-    </a>
+    
+    <div class="profile-menu">
+      <a (click)="goToProfile()">
+        <img class="user-icon" src="./assets/img/user.svg" alt="User Icon" />
+      </a>
+      <div class="opened-profile-menu">
+        @if (currentUser()) {
+          <div class="profile-menu-links">
+            <a (click)="goToProfile()">Your account</a>
+            <a (click)="goToProfile()">Orders</a>
+            <a [routerLink]="['']">Help</a>
+          </div>
+          <div class="seperator"></div>
+          <div class="logout-link">
+          <a (click)="logout()">Not {{ currentUser()?.name }}? Sign out</a>
+          </div>
+        } @else {
+          <div class="sign-in-menu">
+          <button class="sign-in-button" (click)="goToProfile()">Sign In</button>
+          <a (click)="goToProfile()">Register now</a>
+          </div>
+          <div class="seperator"></div>
+          <div class="profile-menu-links">
+            <a (click)="goToProfile()">Your account</a>
+            <a (click)="goToProfile()">Orders</a>
+            <a [routerLink]="['']">Help</a>
+          </div>
+        }
+      </div>
+    </div>
+    
+  
+ 
     <div
       class="shopping-cart"
       [class.no-hover]="isShoppingCartPage"

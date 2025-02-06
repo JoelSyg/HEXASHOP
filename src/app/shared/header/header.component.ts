@@ -23,6 +23,7 @@ export class HeaderComponent implements OnInit {
   currentUser = this.userService.currentUser;
   cartItemsNumber: number = 0;
   isCartOpen: boolean = false;
+  isProfileMenuOpen: boolean = false;
   isShoppingCartPage: boolean = false;
 
   constructor(
@@ -55,11 +56,16 @@ export class HeaderComponent implements OnInit {
   }
 
   goToProfile() {
-    if (this.currentUser()) {
       this.router.navigate(['/profile']); // Falls eingeloggt → Profilseite
-    } else {
-      this.router.navigate(['/auth']); // Falls nicht eingeloggt → Login/Register
-    }
+  }
+
+  logout() {
+    this.userService.logout();
+    window.location.reload();
+  }
+
+  doesUserExist() {
+    this.doesUserExist();
   }
 
   @HostListener('document:click', ['$event'])
