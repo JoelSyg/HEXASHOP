@@ -172,6 +172,20 @@ export class ShoppingCartService implements OnDestroy {
     this.updateCartTotal();
   }
   
+
+  clearCart() {
+    this.cartItemsSubject.next([]);
+    this.cartItemCount.next(0);
+    this.cartTotalSubject.next(0);
+    this.finalTotalSubject.next(0);
+    this.shippingCostSubject.next(0);
+    this.saveCartToStorage();
+    
+    if (this.userService.currentUser()) {
+      this.saveCartToFirestore([]);
+    }
+  }
+  
   
 
   private handlePopState = () => {
