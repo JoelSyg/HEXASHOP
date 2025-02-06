@@ -64,6 +64,10 @@ export class HeaderComponent implements OnInit {
     window.location.reload();
   }
 
+  closeCart() {
+    this.shoppingCartService.closeCart();
+  }
+
   doesUserExist() {
     this.doesUserExist();
   }
@@ -79,7 +83,7 @@ export class HeaderComponent implements OnInit {
       target.closest('.shopping-cart') && !clickedOnBagIcon;
 
     if (this.isCartOpen && (!clickedInsideCart || clickedOnBagIcon || clickedOnToBagButton)) {
-      this.shoppingCartService.closeCart();
+      this.closeCart();
     }
   }
 }

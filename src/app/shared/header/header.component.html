@@ -12,7 +12,7 @@
     
     <div class="profile-menu">
       <a (click)="goToProfile()">
-        <img class="user-icon" src="./assets/img/user.svg" alt="User Icon" />
+        <img class="user-icon" (mousemove)="closeCart()" src="./assets/img/user.svg" alt="User Icon" />
       </a>
       <div class="opened-profile-menu">
         @if (currentUser()) {
