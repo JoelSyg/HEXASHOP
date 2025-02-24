@@ -1,9 +1,9 @@
-@import '../../styles/mixins.scss';
+@import "../../styles/mixins.scss";
 
 .about-us-section {
   position: relative;
-  height: calc(100vh - 160px);
-  max-width: calc(100vw - 160px);
+  min-height: calc(100vh - 160px);
+  max-width: calc(2500px);
   margin: 0 auto;
   @include flex-container(column, center, center);
   padding: 50px 80px 20px 80px;
@@ -37,24 +37,24 @@
     z-index: 3;
     display: flex;
     gap: 14px;
-    width: 80%;
-    height: 29%;
+    width: 1000px;
+    height: 210px;
     font-size: 16px;
 
     .box-mission {
       width: 65%;
       background-color: var(--color-accent);
       box-sizing: border-box;
-      @include flex-container(column, center, column);
-      padding: 0 16px 0 16px;
+      @include flex-container(column, start, column);
+      padding: 32px 16px 0 16px;
     }
 
     .box-vision {
       width: 35%;
       background-color: var(--color-background-neutral);
       box-sizing: border-box;
-      @include flex-container(column, center, column);
-      padding: 0 16px 0 16px;
+      @include flex-container(column, start, column);
+      padding: 32px 16px 0 16px;
     }
   }
 
@@ -62,8 +62,8 @@
     z-index: 3;
     margin-top: 14px;
     display: flex;
-    height: 58%;
-    width: 80%;
+    height: 400px;
+    width: 1000px;
     font-size: 16px;
 
     .container-bottom-left {
@@ -117,5 +117,72 @@
         box-sizing: border-box;
       }
     }
+  }
+}
+
+.d-none {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .about-us-section {
+    .container-top {
+      width: 800px;
+    }
+
+    .container-bottom {
+      width: 800px;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .about-us-section {
+    padding: 50px 40px 20px 40px;
+  }
+  .container-top,
+  .container-bottom {
+    display: none !important;
+  }
+
+  .mobile-about-us {
+    display: flex;
+    flex-direction: column;
+    z-index: 3;
+    gap: 16px;
+
+    .mobile-box-mission {
+      width: 100%;
+      background-color: var(--color-accent);
+      padding: 24px;
+      box-sizing: border-box;
+    }
+
+    .mobile-box-vision {
+      width: 100%;
+      background-color: var(--color-background-neutral);
+      padding: 24px;
+      box-sizing: border-box;
+    }
+
+    .mobile-box-core {
+      width: 100%;
+      background-color: var(--color-accent);
+      padding: 24px;
+      box-sizing: border-box;
+    }
+
+    .mobile-box-history {
+      width: 100%;
+      background-color: var(--color-background-secondary);
+      padding: 24px;
+      box-sizing: border-box;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .about-us-section {
+    padding: 42px 18px 32px 18px;
   }
 }
