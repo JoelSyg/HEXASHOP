@@ -5,7 +5,6 @@ import { ShopItem } from '../types/shop-item.interface.js';
 import { UserFirebaseService } from './user-firebase.service.js';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -28,40 +27,59 @@ export class ShoppingCartService implements OnDestroy {
   private cartOpen = new BehaviorSubject<boolean>(false);
   cartOpen$ = this.cartOpen.asObservable();
 
+  private isMobile = new BehaviorSubject<boolean>(false);
+  isMobile$ = this.isMobile.asObservable();
+
   private isBrowser: boolean;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private userService: UserFirebaseService, private firestore: Firestore) {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private userService: UserFirebaseService,
+    private firestore: Firestore
+  ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
 
     if (this.isBrowser) {
       this.loadCartFromStorage();
+      this.checkMobile();
+      window.addEventListener('resize', this.checkMobile);
       window.addEventListener('popstate', this.handlePopState);
     }
   }
 
+  private checkMobile = () => {
+    const isSmallScreen = window.innerWidth < 900;
+    this.isMobile.next(isSmallScreen);
+    if (isSmallScreen) {
+      this.cartOpen.next(false);
+    }
+  };
+
   addItem(item: ShopItem) {
     const currentItems = this.cartItemsSubject.getValue();
     const existingItemIndex = currentItems.findIndex(
-      (cartItem) => cartItem.id === item.id && cartItem.chosenSize === item.chosenSize
+      (cartItem) =>
+        cartItem.id === item.id && cartItem.chosenSize === item.chosenSize
     );
-  
+
     if (existingItemIndex > -1) {
       const updatedItems = [...currentItems];
-      updatedItems[existingItemIndex].quantity = Number(updatedItems[existingItemIndex].quantity || 1) + 1;
+      updatedItems[existingItemIndex].quantity =
+        Number(updatedItems[existingItemIndex].quantity || 1) + 1;
       this.cartItemsSubject.next(updatedItems);
     } else {
       this.cartItemsSubject.next([...currentItems, { ...item, quantity: 1 }]);
     }
-  
+
     this.updateCartItemCount();
     this.updateCartTotal();
     this.saveCartToStorage();
+
+    if (this.userService.currentUser()) {
+      this.saveCartToFirestore();
+    }
     this.openCart();
-  
-    //  Falls User eingeloggt ist, in Firestore speichern
-    this.userService.currentUser() && this.saveCartToFirestore();
   }
-  
 
   removeItem(item: ShopItem) {
     const updatedItems = this.cartItemsSubject
@@ -115,7 +133,9 @@ export class ShoppingCartService implements OnDestroy {
   }
 
   openCart() {
-    this.cartOpen.next(true);
+    if (!this.isMobile.getValue()) {
+      this.cartOpen.next(true);
+    }
   }
 
   closeCart() {
@@ -132,10 +152,6 @@ export class ShoppingCartService implements OnDestroy {
 
   private saveCartToStorage() {
     if (this.isBrowser) {
-      console.log(
-        'Speichern im localStorage:',
-        this.cartItemsSubject.getValue()
-      );
       localStorage.setItem(
         'shoppingCart',
         JSON.stringify(this.cartItemsSubject.getValue())
@@ -157,21 +173,19 @@ export class ShoppingCartService implements OnDestroy {
 
   async saveCartToFirestore(cartItems?: ShopItem[]) {
     const user = this.userService.currentUser();
-    if (!user) return; // Falls nicht eingeloggt, nichts tun
-  
-    const cartToSave: ShopItem[] = cartItems || this.cartItemsSubject.getValue(); // Falls kein Argument übergeben, den aktuellen Warenkorb nehmen
+    if (!user) return;
+
+    const cartToSave: ShopItem[] =
+      cartItems || this.cartItemsSubject.getValue();
     const userRef = doc(this.firestore, `users/${user.email}`);
-    await setDoc(userRef, { cart: cartToSave }, { merge: true }); //  Warenkorb in Firestore speichern
+    await setDoc(userRef, { cart: cartToSave }, { merge: true });
   }
-  
-  
 
   setCartFromFirestore(cartItems: ShopItem[]) {
     this.cartItemsSubject.next(cartItems);
     this.updateCartItemCount();
     this.updateCartTotal();
   }
-  
 
   clearCart() {
     this.cartItemsSubject.next([]);
@@ -180,13 +194,11 @@ export class ShoppingCartService implements OnDestroy {
     this.finalTotalSubject.next(0);
     this.shippingCostSubject.next(0);
     this.saveCartToStorage();
-    
+
     if (this.userService.currentUser()) {
       this.saveCartToFirestore([]);
     }
   }
-  
-  
 
   private handlePopState = () => {
     this.closeCart();
@@ -194,6 +206,7 @@ export class ShoppingCartService implements OnDestroy {
 
   ngOnDestroy() {
     if (this.isBrowser) {
+      window.removeEventListener('resize', this.checkMobile);
       window.removeEventListener('popstate', this.handlePopState);
     }
   }
