@@ -1,21 +1,30 @@
 <header>
-  <img src="./assets/img/hexashop_logo.svg" alt="Hexashop Logo" />
-  <div class="header-links">
-    <a [routerLink]="['']">Home</a>
-    <a [routerLink]="['/mens-clothing']">Men's</a>
-    <a [routerLink]="['/womens-clothing']">Women's</a>
-    <a [routerLink]="['/kids-clothing']">Kid's</a>
-    <a [routerLink]="['/about-us']">About Us</a>
-    <a [routerLink]="['']">Contact Us</a>
-  </div>
-  <div class="header-right-section">
-    
-    <div class="profile-menu">
-      <a (click)="goToProfile()">
-        <img class="user-icon" (mousemove)="closeCart()" src="./assets/img/user.svg" alt="User Icon" />
-      </a>
-      <div class="opened-profile-menu">
-        @if (currentUser()) {
+  <div class="header-content">
+    <img
+      src="./assets/img/hexashop_logo.svg"
+      class="shop-icon"
+      alt="Hexashop Logo"
+    />
+    <div class="header-links">
+      <a [routerLink]="['']">Home</a>
+      <a [routerLink]="['/mens-clothing']">Men's</a>
+      <a [routerLink]="['/womens-clothing']">Women's</a>
+      <a [routerLink]="['/kids-clothing']">Kid's</a>
+      <a [routerLink]="['/about-us']">About Us</a>
+      <a [routerLink]="['']">Contact Us</a>
+    </div>
+    <div class="header-right-section">
+      <div class="profile-menu" [class.no-hover]="isMobile">
+        <a (click)="goToProfile()">
+          <img
+            class="user-icon"
+            (mousemove)="closeCart()"
+            src="./assets/img/user.svg"
+            alt="User Icon"
+          />
+        </a>
+        <div class="opened-profile-menu">
+          @if (currentUser()) {
           <div class="profile-menu-links">
             <a (click)="goToProfile()">Your account</a>
             <a (click)="goToProfile()">Orders</a>
@@ -23,12 +32,16 @@
           </div>
           <div class="seperator"></div>
           <div class="logout-link">
-          <a (click)="logout()">Not {{ currentUser()?.name }}? Sign out</a>
+            <a (click)="logout()"
+              ><b>Not {{ currentUser()?.name }}? Sign out</b></a
+            >
           </div>
-        } @else {
+          } @else {
           <div class="sign-in-menu">
-          <button class="sign-in-button" (click)="goToProfile()">Sign In</button>
-          <a (click)="goToProfile()">Register now</a>
+            <button class="sign-in-button" (click)="goToProfile()">
+              Sign In
+            </button>
+            <a (click)="goToProfile()">Register now</a>
           </div>
           <div class="seperator"></div>
           <div class="profile-menu-links">
@@ -36,84 +49,115 @@
             <a (click)="goToProfile()">Orders</a>
             <a [routerLink]="['']">Help</a>
           </div>
-        }
-      </div>
-    </div>
-    
-  
- 
-    <div
-      class="shopping-cart"
-      [class.no-hover]="isShoppingCartPage"
-      [class.visible]="isCartOpen"
-    >
-      <div>
-        <a [routerLink]="['/shopping-cart-page']">
-          <img src="./assets/img/shopping_bag.svg" alt="Shopping Bag" />
-        </a>
-        @if (cartItemsNumber > 0) {
-        <span class="cart-items-number">{{ cartItemsNumber }}</span>
-        }
-      </div>
-      <div class="opened-shopping-cart" [class.visible]="isCartOpen">
-        @if ((cartItems$ | async)?.length === 0) {
-        <div class="empty-cart">
-          <div class="empty-cart-top">
-            <h1>Your bag is empty</h1>
-            <p>Start adding your favorites to fill it up!</p>
-          </div>
-          <div class="empty-cart-bottom">
-            <p>Don't know where to start?</p>
-            <a [routerLink]="['']"> <button>See what's new</button> </a>
-          </div>
+          }
         </div>
-        } @else {
-        <h1>Your bag</h1>
-        <div class="cart-products">
-          @for (item of (cartItems$ | async); track item.id; let last = $last;)
-          {
-          <div class="cart-single-product">
-            <div class="cart-product-image">
-              <img [src]="item.image" alt="{{ item.name }}" />
+      </div>
+
+      <div
+        class="shopping-cart"
+        [class.no-hover]="isShoppingCartPage || isMobile"
+        [class.visible]="isCartOpen"
+      >
+        <div>
+          <a [routerLink]="['/shopping-cart-page']">
+            <img src="./assets/img/shopping_bag.svg" alt="Shopping Bag" />
+          </a>
+          @if (cartItemsNumber > 0) {
+          <span class="cart-items-number">{{ cartItemsNumber }}</span>
+          }
+        </div>
+        <div class="opened-shopping-cart" [class.visible]="isCartOpen">
+          @if ((cartItems$ | async)?.length === 0) {
+          <div class="empty-cart">
+            <div class="empty-cart-top">
+              <h1>Your bag is empty</h1>
+              <p>Start adding your favorites to fill it up!</p>
             </div>
-            <div class="cart-product-details">
-              <h2>{{ item.name }}</h2>
-              <p>
-                <b>{{ item.price | currency }}</b>
-              </p>
-              <p class="color-gray">Size: {{ item.chosenSize }}</p>
-              <p>quantity: {{ item.quantity }}</p>
+            <div class="empty-cart-bottom">
+              <p>Don't know where to start?</p>
+              <a [routerLink]="['']"> <button>See what's new</button> </a>
             </div>
-            <div>
-              <button class="remove-button" (click)="removeItem(item)">
-                <img src="./assets/img/close.png" alt="" />
-              </button>
+          </div>
+          } @else {
+          <h1>Your bag</h1>
+          <div class="cart-products">
+            @for (item of (cartItems$ | async); track item.id; let last =
+            $last;) {
+            <div class="cart-single-product">
+              <div class="cart-product-image">
+                <img [src]="item.image" alt="{{ item.name }}" />
+              </div>
+              <div class="cart-product-details">
+                <h2>{{ item.name }}</h2>
+                <p>
+                  <b>{{ item.price | currency }}</b>
+                </p>
+                <p class="color-gray">Size: {{ item.chosenSize }}</p>
+                <p>quantity: {{ item.quantity }}</p>
+              </div>
+              <div>
+                <button class="remove-button" (click)="removeItem(item)">
+                  <img src="./assets/img/close.png" alt="" />
+                </button>
+              </div>
+              @if (!last) {
+              <div class="product-seperator"></div>
+              }
             </div>
-            @if (!last) {
-            <div class="product-seperator"></div>
             }
+          </div>
+          <div class="cart-bottom">
+            <div class="summary">
+              <div class="cart-delivery">
+                <p>Delivery</p>
+                <p>{{ shippingCost$ | async | currency }}</p>
+              </div>
+              <div class="cart-total">
+                <div>
+                  <strong>Total</strong>
+                  <p class="color-gray">VAT included</p>
+                </div>
+                <strong>{{ finalTotal$ | async | currency }}</strong>
+              </div>
+            </div>
+            <a [routerLink]="['/shopping-cart-page']">
+              <button id="toBagButton">Go to bag</button>
+            </a>
           </div>
           }
         </div>
-        <div class="cart-bottom">
-          <div class="summary">
-            <div class="cart-delivery">
-              <p>Delivery</p>
-              <p>{{ shippingCost$ | async | currency }}</p>
-            </div>
-            <div class="cart-total">
-              <div>
-                <strong>Total</strong>
-                <p class="color-gray">VAT included</p>
-              </div>
-              <strong>{{ finalTotal$ | async | currency }}</strong>
-            </div>
+      </div>
+      <div class="mobile-dropdown">
+        <img
+          (click)="toggleMobileMenu()"
+          src="./assets/img/menu-icon.svg"
+          alt="Menu"
+        />
+
+        <div class="mobile-links-menu" [class.open]="isMobileMenuOpen()">
+          <img
+            class="close-menu"
+            (click)="closeMobileMenu()"
+            src="./assets/img/close.png"
+            alt=""
+          />
+          <div class="mobile-links">
+            <a [routerLink]="['']" (click)="closeMobileMenu()">Home</a>
+            <a [routerLink]="['/mens-clothing']" (click)="closeMobileMenu()"
+              >Men's</a
+            >
+            <a [routerLink]="['/womens-clothing']" (click)="closeMobileMenu()"
+              >Women's</a
+            >
+            <a [routerLink]="['/kids-clothing']" (click)="closeMobileMenu()"
+              >Kid's</a
+            >
+            <a [routerLink]="['/about-us']" (click)="closeMobileMenu()"
+              >About Us</a
+            >
+            <a [routerLink]="['']" (click)="closeMobileMenu()">Contact Us</a>
           </div>
-          <a [routerLink]="['/shopping-cart-page']">
-            <button id="toBagButton">Go to bag</button>
-          </a>
         </div>
-        }
       </div>
     </div>
   </div>
