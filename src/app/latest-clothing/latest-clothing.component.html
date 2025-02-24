@@ -1,9 +1,11 @@
 <div class="wrapper">
-  @for (category of categories; track category.category) {
+  <div class="content-wrapper">
+    @for (category of categories; track category.category) {
     <section>
       <h2>{{ category.title }}</h2>
       <p>
-        Lorem ipsum illo distinctio consectetur assumenda ducimus iure ut minus ex.
+        Lorem ipsum illo distinctio consectetur assumenda ducimus iure ut minus
+        ex.
       </p>
       <div class="products-container" [attr.data-category]="category.category">
         <div
@@ -11,15 +13,20 @@
           [class.hidden]="!showLeftArrow(category.category)"
           (click)="scrollLeft(category.category)"
         >
-          <img src="./assets/img/right-arrow.png" class="arrow-left" alt="Scroll Left" />
+          <img
+            src="./assets/img/right-arrow.png"
+            class="arrow-left"
+            alt="Scroll Left"
+          />
         </div>
         <div class="products-div" #scrollContainer>
           @for (item of getItemsByCategory(category.category); track item.id) {
-            <app-product-box
-              [itemName]="item.name"
-              [itemImage]="item.image"
-              [itemPrice]="item.price"
-            ></app-product-box>
+          <app-product-box
+            class="product"
+            [itemName]="item.name"
+            [itemImage]="item.image"
+            [itemPrice]="item.price"
+          ></app-product-box>
           }
         </div>
         <div
@@ -27,9 +34,14 @@
           [class.hidden]="!showRightArrow(category.category)"
           (click)="scrollRight(category.category)"
         >
-          <img src="./assets/img/right-arrow.png" class="arrow-right" alt="Scroll Right" />
+          <img
+            src="./assets/img/right-arrow.png"
+            class="arrow-right"
+            alt="Scroll Right"
+          />
         </div>
       </div>
     </section>
-  }
+    }
+  </div>
 </div>

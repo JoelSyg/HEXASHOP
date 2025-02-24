@@ -7,7 +7,10 @@ import {
   ViewChild,
   Renderer2,
   signal,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { ShopItem } from '../types/shop-item.interface';
 import { CommonModule } from '@angular/common';
 import { ItemService } from '../services/item-service.service';
@@ -31,18 +34,21 @@ export class LatestClothingComponent implements OnInit, AfterViewInit {
 
   mensLatestItems = signal<ShopItem[]>([]);
   isLoading = signal(true);
-
+  scrollingInProgress = signal<boolean>(false);
   showLeftArrowState = new Map<string, boolean>();
   showRightArrowState = new Map<string, boolean>();
-  scrollingInProgress = signal<boolean>(false);
+  isTouchDevice = signal<boolean>(false);
 
-  testImage = './assets/img/leather_bag_men.jpg';
-
-  constructor(private itemService: ItemService, private renderer: Renderer2) {}
+  constructor(
+    private itemService: ItemService,
+    private renderer: Renderer2,
+    @Inject(PLATFORM_ID) private platformId: object
+  ) {}
 
   @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
 
   async ngOnInit(): Promise<void> {
+    this.detectTouchDevice();
     try {
       await this.itemService.loadItems();
     } catch (error) {
@@ -73,6 +79,14 @@ export class LatestClothingComponent implements OnInit, AfterViewInit {
     });
   }
 
+  detectTouchDevice() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.isTouchDevice.set(
+        'ontouchstart' in window || navigator.maxTouchPoints > 0
+      );
+    }
+  }
+
   getItemsByCategory(category: string): ShopItem[] {
     return this.itemService
       .getFilteredItems()
@@ -82,22 +96,38 @@ export class LatestClothingComponent implements OnInit, AfterViewInit {
   scrollLeft(category: string) {
     const container = this.getScrollContainer(category);
     if (container) {
-      const itemWidth =
-        (container.firstElementChild as HTMLElement)?.offsetWidth + 15.5;
-      if (itemWidth) {
-        container.scrollLeft = Math.round(container.scrollLeft - itemWidth * 4);
-      }
+      const firstItem = container.querySelector(
+        'app-product-box'
+      ) as HTMLElement;
+      if (!firstItem) return;
+
+      const itemWidth = firstItem.getBoundingClientRect().width;
+      const gap = parseFloat(getComputedStyle(container).gap) || 0;
+      const scrollAmount = (itemWidth + gap) * 4; // 4 Artikel auf einmal
+
+      container.scrollTo({
+        left: container.scrollLeft - scrollAmount,
+        behavior: 'smooth',
+      });
     }
   }
 
   scrollRight(category: string) {
     const container = this.getScrollContainer(category);
     if (container) {
-      const itemWidth =
-        (container.firstElementChild as HTMLElement)?.offsetWidth + 15.5;
-      if (itemWidth) {
-        container.scrollLeft = Math.round(container.scrollLeft + itemWidth * 4);
-      }
+      const firstItem = container.querySelector(
+        'app-product-box'
+      ) as HTMLElement;
+      if (!firstItem) return;
+
+      const itemWidth = firstItem.getBoundingClientRect().width;
+      const gap = parseFloat(getComputedStyle(container).gap) || 0;
+      const scrollAmount = (itemWidth + gap) * 4; // 4 Artikel auf einmal
+
+      container.scrollTo({
+        left: container.scrollLeft + scrollAmount,
+        behavior: 'smooth',
+      });
     }
   }
 
@@ -121,11 +151,15 @@ export class LatestClothingComponent implements OnInit, AfterViewInit {
   }
 
   showLeftArrow(category: string): boolean {
-    return this.showLeftArrowState.get(category) ?? false;
+    return (
+      !this.isTouchDevice() && (this.showLeftArrowState.get(category) ?? false)
+    );
   }
 
   showRightArrow(category: string): boolean {
-    return this.showRightArrowState.get(category) ?? true;
+    return (
+      !this.isTouchDevice() && (this.showRightArrowState.get(category) ?? true)
+    );
   }
 
   getScrollContainer(category: string): HTMLElement | null {

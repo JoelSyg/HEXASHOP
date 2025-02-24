@@ -1,10 +1,16 @@
 @import "../../styles/mixins.scss";
 
 .wrapper {
-  max-width: 100vw;
-  margin: 0 auto;
-  padding: 80px;
+  width: 100%;
   background-color: var(--color-background-primary);
+  display: flex;
+  justify-content: center;
+}
+
+.content-wrapper {
+  max-width: 1440px;
+  width: 100%;
+  padding: 50px;
   box-sizing: border-box;
   @include flex-container(column, flex-start, stretch, 80px);
 }
@@ -35,7 +41,7 @@ h2 {
   }
 
   .left-arrow-div {
-    left: 0;
+    left: 1.5px;
 
     .arrow-left {
       transform: rotate(180deg);
@@ -44,7 +50,7 @@ h2 {
   }
 
   .right-arrow-div {
-    right: 0;
+    right: 1.5px;
 
     .arrow-right {
       height: 28px;
@@ -61,13 +67,53 @@ h2 {
   flex: 0 0 calc((100% - 49px) / 4);
   max-width: calc((100% - 49px) / 4);
   box-sizing: border-box;
+
+  @media (max-width: 1025px) {
+    flex: 0 0 calc((100% - 33px) / 3);
+    max-width: calc((100% - 33px) / 3);
+  }
+
+  @media (max-width: 770px) {
+    flex: 0 0 calc((100% - 16.5px) / 2);
+    max-width: calc((100% - 16.5px) / 2);
+  }
 }
 
 .products-div {
   @include flex-container(row, flex-start, stretch, 16px);
-  overflow: hidden;
+  overflow-x: scroll;
   scroll-behavior: smooth;
-  margin: 0 -80px;
-  padding: 0 80px;
+  margin: 0 -50px;
+  padding: 0 50px;
   flex: 1;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.products-div::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+@media (max-width: 900px) {
+  .content-wrapper {
+    padding: 38px;
+  }
+
+  .products-div {
+    margin: 0 -38px;
+    padding: 0 38px;
+  }
+}
+
+@media (max-width: 500px) {
+  .content-wrapper {
+    padding: 24px;
+  }
+
+  .products-div {
+    margin: 0 -24px;
+    padding: 0 24px;
+  }
 }
