@@ -9,7 +9,7 @@ header {
   .header-content {
     max-width: 1440px;
     width: 100%;
-    padding: 0 74px 0px 80px;
+    padding: 0 44px 0px 50px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -512,7 +512,6 @@ header {
 @media (max-width: 1250px) {
   header {
     .header-content {
-      padding: 0 44px 0px 50px;
 
       .header-links {
         gap: 24px;

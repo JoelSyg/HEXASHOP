@@ -26,7 +26,7 @@
   min-height: 500px;
   max-width: 1440px;
   width: 100%;
-  padding: 40px 80px 40px 80px;
+  padding: 40px 50px 40px 50px;
   @include flex-container(row, flex-start, stretch, 16px);
   box-sizing: border-box;
   color: var(--color-text-secondary);
