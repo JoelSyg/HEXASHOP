@@ -1,45 +1,117 @@
 <app-header></app-header>
 
-<div class="shopping-cart-page">
+<div class="wrapper">
   @if ((cartItems$ | async)?.length === 0) {
   <p>Your bag is empty</p>
   } @else {
-  <ul class="cart-items">
-    @for (item of (cartItems$ | async); track cartItems$) {
-    <li class="cart-item">
-      <div>
-        <h3>{{ item.name }} ({{ item.chosenSize }})</h3>
-        <p>{{ item.price | currency }}</p>
-        <p>{{ item.quantity }}</p>
+  <div class="shopping-cart-page">
+    <div class="cart-items-div">
+      <h1>
+        Your bag ({{ (cartItemsCount$ | async) ?? 0 }}
+        @if (((cartItemsCount$ | async) ?? 0) > 1) {items} @else {item})
+      </h1>
+
+      <ul class="cart-items">
+        @for (item of (cartItems$ | async); track cartItems$) {
+        <li class="cart-item">
+          <div class="item-info">
+            <img src="{{ item.image }}" alt="" />
+            <div>
+              <p>{{ item.name }}</p>
+              <p>
+                <b>{{ item.price | currency }}</b>
+              </p>
+              <p>Size: {{ item.chosenSize }}</p>
+              @if (isMobile) {
+              <div class="item-actions">
+                <label for="quantity-{{ item.id }}"></label>
+                <form #cartForm="ngForm">
+                  <select
+                    id="quantity-{{ item.id }}"
+                    name="quantity-{{ item.id }}"
+                    [(ngModel)]="item.quantity"
+                    (ngModelChange)="updateQuantity(item, $event)"
+                  >
+                    @for (option of options; track options) {
+                    <option [value]="option">{{ option }}</option>
+                    }
+                  </select>
+                </form>
+              </div>
+              }
+            </div>
+          </div>
+
+          @if (!isMobile) {
+          <div class="item-actions">
+            <label for="quantity-{{ item.id }}"></label>
+            <form #cartForm="ngForm">
+              <select
+                id="quantity-{{ item.id }}"
+                name="quantity-{{ item.id }}"
+                [(ngModel)]="item.quantity"
+                (ngModelChange)="updateQuantity(item, $event)"
+              >
+                @for (option of options; track options) {
+                <option [value]="option">{{ option }}</option>
+                }
+              </select>
+            </form>
+            <button class="remove-button" (click)="removeItem(item)">
+              <img src="./assets/img/close.png" alt="" />
+            </button>
+          </div>
+          } @else {
+          <button class="remove-button" (click)="removeItem(item)">
+            <img src="./assets/img/close.png" alt="" />
+          </button>
+          }
+        </li>
+        }
+      </ul>
+    </div>
+
+    <div #summaryElement class="summary">
+      <span
+        ><p>Subtotal</p>
+        <p>{{ cartTotal$ | async | currency }}</p></span
+      >
+      <span
+        ><p>Delivery</p>
+        <p>{{ shippingCost$ | async | currency }}</p></span
+      >
+      <div class="seperator"></div>
+      <span>
+        <span>
+          <b>Total</b>
+          <p class="color-gray">VAT included</p>
+        </span>
+        <b>{{ finalTotal$ | async | currency }}</b>
+      </span>
+      <a [routerLink]="['/checkout']"
+        ><button class="checkout-button">Go to checkout</button></a
+      >
+      <div class="payment-options">
+        <img src="./assets/img/icon_pp.svg" alt="" /><img
+          src="./assets/img/icon_creditcard.png"
+          alt=""
+        /><img src="./assets/img/icon_invoice.png" alt="" />
       </div>
-
-      <div class="item-actions">
-        <label for="quantity-{{ item.id }}">Amount</label>
-        <form #cartForm="ngForm">
-          <select
-            id="quantity-{{ item.id }}"
-            name="quantity-{{ item.id }}"
-            [(ngModel)]="item.quantity"
-            (ngModelChange)="updateQuantity(item, $event)"
-          >
-            @for (option of options; track options) {
-            <option [value]="option">{{ option }}</option>
-            }
-          </select>
-        </form>
-
-        <button (click)="removeItem(item)">X</button>
-      </div>
-    </li>
-    }
-  </ul>
-
-  <div class="summary">
-    <p>Subtotal {{ cartTotal$ | async | currency }}</p>
-    <p>Delivery {{ shippingCost$ | async | currency }}</p>
-    <p><strong>Total {{ finalTotal$ | async | currency }}</strong></p>
-    <a [routerLink]="['/checkout']"><button>Go to checkout</button></a>
+    </div>
   </div>
-}
+  } @if (!isSummaryVisible() && ((cartItemsCount$ | async) ?? 0) > 1) {
+  <div class="mobile-summary">
+    <span>
+      <span>
+        <b>Total</b>
+        <p class="color-gray">VAT included</p>
+      </span>
+      <b>{{ finalTotal$ | async | currency }}</b>
+    </span>
+    <a [routerLink]="['/checkout']"
+      ><button class="checkout-button">Go to checkout</button></a
+    >
+  </div>
+  }
 </div>
 <app-footer></app-footer>
