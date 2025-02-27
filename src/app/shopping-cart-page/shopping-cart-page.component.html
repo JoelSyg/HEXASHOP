@@ -2,7 +2,16 @@
 
 <div class="wrapper">
   @if ((cartItems$ | async)?.length === 0) {
-  <p>Your bag is empty</p>
+  <div class="empty-cart">
+    <img src="./assets/img/shopping-bags.png" alt="" />
+    <h3>Your bag is empty</h3>
+    <a [routerLink]="['/auth']"
+      ><button class="login-button">Sign in</button></a
+    >
+    <a [routerLink]="['/womens-clothing']"
+      ><button class="inspire-button">Get inspired</button></a
+    >
+  </div>
   } @else {
   <div class="shopping-cart-page">
     <div class="cart-items-div">
