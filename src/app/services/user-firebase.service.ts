@@ -182,6 +182,6 @@ export class UserFirebaseService {
     }
 
     this.cartService.setCartFromFirestore([]); 
-    this.router.navigate(['/']);
+    this.router.navigate(['']);
   }
 }
