@@ -1,17 +1,67 @@
-<div class="auth-container">
-  <button (click)="goBack()">← Zurück</button>
-  <h2>Passwort erstellen</h2>
+<app-header></app-header>
 
-  <input type="email" [value]="email()" readonly>
-  <input type="text" placeholder="Name" [(ngModel)]="name">
-  <input type="text" placeholder="Surname" [(ngModel)]="surname">
-  <input type="password" placeholder="Passwort" [(ngModel)]="password">
+<div class="wrapper">
+  <div class="auth-container">
+    <h2>Register</h2>
 
-  <button (click)="register()" [disabled]="isLoading()">
-    @if (isLoading()) { Lädt... } @else { Registrieren }
-  </button>
+    <div class="email-input">
+      <input type="email" [value]="email()" readonly />
+      <a class="edit-button" (click)="goBack()">Edit</a>
+    </div>
 
-  @if (errorMessage()) {
-    <p class="error">{{ errorMessage() }}</p>
-  }
+    <form>
+      <div>
+        <input
+          type="text"
+          placeholder="Surname"
+          [formControl]="nameControl"
+          [class.input-error]="nameErrorMessage()"
+        />
+
+        @if (nameErrorMessage()) {
+        <p class="error">{{ nameErrorMessage() }}</p>
+        }
+      </div>
+
+      <div>
+        <input
+          type="text"
+          placeholder="Name"
+          [formControl]="surnameControl"
+          [class.input-error]="surnameErrorMessage()"
+        />
+
+        @if (surnameErrorMessage()) {
+        <p class="error">{{ surnameErrorMessage() }}</p>
+        }
+      </div>
+
+      <div>
+        <input
+          type="password"
+          placeholder="Password"
+          [formControl]="passwordControl"
+          [class.input-error]="passwordErrorMessage()"
+        />
+
+        @if (passwordErrorMessage()) {
+        <p class="error">{{ passwordErrorMessage() }}</p>
+        }
+      </div>
+    </form>
+
+    <button (click)="register()" [disabled]="isLoading()">
+      @if (isLoading()) { Loading... } @else { Register }
+    </button>
+
+    @if (errors()['general']) {
+    <p class="error">{{ errors()["general"] }}</p>
+    }
+
+    <p class="policy-agree">
+      By continuing, you agree to our <a href="">Privacy Policy</a>
+    </p>
+  </div>
 </div>
+
+<app-footer></app-footer>

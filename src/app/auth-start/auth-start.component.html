@@ -1,16 +1,49 @@
-
-  
+<app-header></app-header>
+<div class="wrapper">
   <div class="auth-start-container">
-    <h2>Willkommen</h2>
-    <p>Gib deine E-Mail-Adresse ein, um dich einzuloggen oder zu registrieren.</p>
-  
-    <input type="email" placeholder="E-Mail" [(ngModel)]="email">
+    <h2>Hello!</h2>
+    <p class="subheading">Enter your email to register or sign in.</p>
+
+    <form>
+      <input
+        type="email"
+        placeholder="E-Mail"
+        [formControl]="emailControl"
+        [class.input-error]="emailErrorMessage()"
+      />
+      @if (emailErrorMessage()) {
+      <p class="error">{{ emailErrorMessage() }}</p>
+      }
+    </form>
+
+    <p class="policy-agree">
+      By continuing, you agree to our <a href="">Privacy Policy</a>
+    </p>
+
     <button (click)="checkEmail()" [disabled]="isLoading()">
-      @if (isLoading()) { Lädt... } @else { Weiter }
+      @if (isLoading()) { loading... } @else { Continue }
     </button>
-  
-    @if (errorMessage()) {
-      <p class="error">{{ errorMessage() }}</p>
+
+    @if (errors()['general']) {
+    <p class="error">{{ errors()["general"] }}</p>
     }
+
+    <div class="or-span">
+      <div class="short-seperator"></div>
+      <span>Or</span>
+      <div class="short-seperator"></div>
+    </div>
+
+    <button
+      class="google-button"
+      (click)="onGoogleLogin()"
+      [disabled]="isLoading()"
+    >
+      <div>
+        <img src="./assets/img/google_icon.svg" alt="" />
+        Continue with Google
+      </div>
+    </button>
   </div>
-  
+</div>
+<app-footer></app-footer>

@@ -1,16 +1,33 @@
-<div class="auth-container">
-    <button (click)="goBack()">← Zurück</button>
-    <h2>Passwort eingeben</h2>
-  
-    <input type="email" [value]="email()" readonly>
-    <input type="password" placeholder="Passwort" [(ngModel)]="password">
-  
+<app-header></app-header>
+
+<div class="wrapper">
+  <div class="auth-container">
+    <h2>Enter your password</h2>
+
+    <div class="email-input">
+      <input type="email" [value]="email()" readonly />
+      <a class="edit-button" (click)="editEmail()">Edit</a>
+    </div>
+
+    <form>
+      <div>
+        <input
+          type="password"
+          placeholder="Password"
+          [formControl]="passwordControl"
+          [class.input-error]="passwordErrorMessage()"
+        />
+
+        @if (passwordErrorMessage()) {
+        <p class="error">{{ passwordErrorMessage() }}</p>
+        }
+      </div>
+    </form>
+
     <button (click)="login()" [disabled]="isLoading()">
-      @if (isLoading()) { Lädt... } @else { Einloggen }
+      @if (isLoading()) { Loading... } @else { Log in }
     </button>
-  
-    @if (errorMessage()) {
-      <p class="error">{{ errorMessage() }}</p>
-    }
   </div>
-  
+</div>
+
+<app-footer></app-footer>
