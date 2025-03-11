@@ -5,9 +5,12 @@
   <div class="empty-cart">
     <img src="./assets/img/shopping-bags.png" alt="" />
     <h3>Your bag is empty</h3>
-    <a [routerLink]="['/auth']"
-      ><button class="login-button">Sign in</button></a
-    >
+    @if (!isUserLoggedIn) {
+      <a [routerLink]="['/auth']">
+        <button class="login-button">Sign in</button>
+      </a>
+    }    
+    
     <a [routerLink]="['/womens-clothing']"
       ><button class="inspire-button">Get inspired</button></a
     >

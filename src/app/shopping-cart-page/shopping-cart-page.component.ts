@@ -16,6 +16,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ShopItem } from '../types/shop-item.interface';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { UserFirebaseService } from '../services/user-firebase.service';
 
 @Component({
   selector: 'app-shopping-cart-page',
@@ -49,6 +50,7 @@ export class ShoppingCartPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private shoppingCartService: ShoppingCartService,
+    private userFirebaseService: UserFirebaseService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
@@ -107,4 +109,9 @@ export class ShoppingCartPageComponent implements OnInit, OnDestroy {
       quantity
     );
   }
+
+  get isUserLoggedIn(): boolean {
+    return this.userFirebaseService.currentUser() !== null;
+  }
+  
 }
