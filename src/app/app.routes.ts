@@ -13,6 +13,7 @@ import { AuthRegisterComponent } from './auth-register/auth-register.component';
 import { AuthLoginComponent } from './auth-login/auth-login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CheckoutSuccessComponent } from './checkout-success/checkout-success.component';
+import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 
 export const routes: Routes = [
     { path: '', component: MainPageComponent},
@@ -22,6 +23,7 @@ export const routes: Routes = [
     { path: 'kids-clothing', component: CategoryClothingComponent, data: { category: 'kids' }},
     { path: 'single-item-page/:id', component: SingleItemPageComponent},
     { path: 'shopping-cart-page', component: ShoppingCartPageComponent},
+    { path: 'legal-notice', component: LegalNoticeComponent},
 
     { path: 'auth', component: AuthStartComponent },
     { path: 'auth/login', component: AuthLoginComponent }, 
