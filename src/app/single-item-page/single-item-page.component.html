@@ -34,7 +34,7 @@
       </div>
 
       <div class="actions">
-        <button [disabled]="isCartButtonDisabled()" (click)="addItemToCart()">
+        <button [disabled]="isCartButtonDisabled()" (click)="addItemToCart()" [class.success]="buttonSuccess()">
           Add to bag
         </button>
       </div>

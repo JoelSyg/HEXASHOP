@@ -2,11 +2,10 @@
 
 .about-us-section {
   position: relative;
-  min-height: calc(100vh - 160px);
+  min-height: calc(100vh - 40px);
   max-width: calc(2500px);
-  margin: 0 auto;
   @include flex-container(column, center, center);
-  padding: 50px 80px 20px 80px;
+  padding: 32px 80px 20px 80px;
   margin-bottom: 90px;
 
   h2 {
@@ -14,7 +13,7 @@
     font-size: 42px;
     color: var(--color-text-secondary);
     z-index: 3;
-    padding-bottom: 12px;
+    padding-bottom: 32px;
   }
 
   h3 {

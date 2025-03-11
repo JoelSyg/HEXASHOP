@@ -10,7 +10,7 @@
     align-items: center;
     gap: 12px;
     width: 300px;
-    padding-top: 32px;
+    padding-top: 48px;
     img {
       height: 100px;
       max-width: fit-content;
@@ -33,10 +33,13 @@
         cursor: pointer;
         border-radius: 5px;
         font-weight: bold;
+        transition: background-color 0.125s ease-in-out;
+      
         &:hover {
-          background-color: rgba(0, 0, 0, 0.55);
+            background-color: rgba(194, 194, 194, 0.55);
         }
-      }
+    }
+    
 
       .login-button {
         width: 100%;
@@ -223,8 +226,10 @@
   border-radius: 5px;
   margin-top: 12px;
   font-weight: bold;
+  transition: background-color 0.125s ease-in-out;
+  
   &:hover {
-    background-color: rgba(0, 0, 0, 0.55);
+    background-color: rgba(8, 8, 8, 0.76);
   }
 }
 

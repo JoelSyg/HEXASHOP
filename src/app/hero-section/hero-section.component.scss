@@ -37,6 +37,7 @@
     height: 40px;
     width: 120px;
     border: 2px solid var(--color-text-secondary);
+    border-radius: 3px;
     @include flex-container(row, center, center, 0);
     font-size: 16px;
     cursor: pointer;
@@ -172,6 +173,38 @@
         flex: none;
         width: 100%;
         height: calc(25% - 16px);
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .content-wrapper {
+    .hero-section {
+      h1 {
+        font-size: 38px;
+      }
+    }
+  }
+}
+
+@media (max-width: 410px) {
+  .content-wrapper {
+    .hero-section {
+      padding: 32px;
+      h1 {
+        font-size: 32px;
+      }
+    }
+  }
+}
+
+@media (max-width: 325px) {
+  .content-wrapper {
+    .hero-section {
+      padding: 24px;
+      h1 {
+        font-size: 30px;
       }
     }
   }

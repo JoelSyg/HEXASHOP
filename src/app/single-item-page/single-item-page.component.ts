@@ -32,6 +32,8 @@ export class SingleItemPageComponent implements OnInit {
 
   showSizeError = signal<boolean>(false);
 
+  buttonSuccess = signal<boolean>(false);
+
   selectSize(size: string) {
     this.selectedSize.set(size);
     this.showSizeError.set(false);
@@ -159,6 +161,11 @@ export class SingleItemPageComponent implements OnInit {
       }, 100);
 
       console.log('Item hinzugefügt:', itemToAdd);
+      this.buttonSuccess.set(true);
+
+      setTimeout(() => {
+        this.buttonSuccess.set(false);
+      }, 700);
     } else {
       console.error('Kein Item zum Hinzufügen gefunden.');
     }

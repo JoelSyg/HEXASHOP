@@ -91,10 +91,10 @@
       cursor: pointer;
       border-radius: 5px;
       font-weight: bold;
-      transition: background-color 0.2s;
-
+      transition: background-color 0.125s ease-in-out;
+      
       &:hover {
-        background-color: rgba(0, 0, 0, 0.55);
+        background-color: rgba(8, 8, 8, 0.76);
       }
 
       &:disabled {
