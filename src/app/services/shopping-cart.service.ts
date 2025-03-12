@@ -45,7 +45,17 @@ export class ShoppingCartService implements OnDestroy {
       window.addEventListener('resize', this.checkMobile);
       window.addEventListener('popstate', this.handlePopState);
     }
+
+    this.cartItems$.subscribe((cartItems) => {
+      if (this.userService.currentUser()) {
+        this.saveCartToFirestore(cartItems);
+      }
+    });
+    
+
   }
+
+  
 
   private checkMobile = () => {
     const isSmallScreen = window.innerWidth < 900;
@@ -75,9 +85,7 @@ export class ShoppingCartService implements OnDestroy {
     this.updateCartTotal();
     this.saveCartToStorage();
 
-    if (this.userService.currentUser()) {
-      this.saveCartToFirestore();
-    }
+  
     this.openCart();
   }
 
@@ -195,9 +203,6 @@ export class ShoppingCartService implements OnDestroy {
     this.shippingCostSubject.next(0);
     this.saveCartToStorage();
 
-    if (this.userService.currentUser()) {
-      this.saveCartToFirestore([]);
-    }
   }
 
   private handlePopState = () => {
