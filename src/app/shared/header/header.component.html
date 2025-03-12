@@ -13,7 +13,7 @@
       <a [routerLink]="['/womens-clothing']">Women's</a>
       <a [routerLink]="['/kids-clothing']">Kid's</a>
       <a [routerLink]="['/about-us']">About Us</a>
-      <a [routerLink]="['']">Contact Us</a>
+      <a [routerLink]="['/contact-us']">Contact Us</a>
     </div>
     <div class="header-right-section">
       <div class="profile-menu" [class.no-hover]="isMobile">
@@ -157,7 +157,7 @@
             <a [routerLink]="['/about-us']" (click)="closeMobileMenu()"
               >About Us</a
             >
-            <a [routerLink]="['']" (click)="closeMobileMenu()">Contact Us</a>
+            <a [routerLink]="['/contact-us']" (click)="closeMobileMenu()">Contact Us</a>
           </div>
         </div>
       </div>
