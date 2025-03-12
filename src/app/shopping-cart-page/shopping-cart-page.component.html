@@ -31,7 +31,7 @@
             <div>
               <p>{{ item.name }}</p>
               <p>
-                <b>{{ item.price | currency }}</b>
+                <b>{{ item.price | currency:'EUR' }}</b>
               </p>
               <p>Size: {{ item.chosenSize }}</p>
               @if (isMobile) {
@@ -86,11 +86,11 @@
     <div #summaryElement class="summary">
       <span
         ><p>Subtotal</p>
-        <p>{{ cartTotal$ | async | currency }}</p></span
+        <p>{{ cartTotal$ | async | currency:'EUR' }}</p></span
       >
       <span
         ><p>Delivery</p>
-        <p>{{ shippingCost$ | async | currency }}</p></span
+        <p>{{ shippingCost$ | async | currency:'EUR' }}</p></span
       >
       <div class="seperator"></div>
       <span>
@@ -98,7 +98,7 @@
           <b>Total</b>
           <p class="color-gray">VAT included</p>
         </span>
-        <b>{{ finalTotal$ | async | currency }}</b>
+        <b>{{ finalTotal$ | async | currency:'EUR' }}</b>
       </span>
       <a [routerLink]="['/checkout']"
         ><button class="checkout-button">Go to checkout</button></a
@@ -118,7 +118,7 @@
         <b>Total</b>
         <p class="color-gray">VAT included</p>
       </span>
-      <b>{{ finalTotal$ | async | currency }}</b>
+      <b>{{ finalTotal$ | async | currency:'EUR' }}</b>
     </span>
     <a [routerLink]="['/checkout']"
       ><button class="checkout-button">Go to checkout</button></a

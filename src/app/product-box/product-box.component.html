@@ -2,7 +2,7 @@
     <img src="{{itemImage}}" alt="">
     <div>
       <h3>{{ itemName }}</h3>
-      <span>{{ formatPrice(itemPrice) }} €</span>
+      <span>{{ itemPrice | currency:'EUR' }}</span>
     </div>
   </div>
   

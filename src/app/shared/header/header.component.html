@@ -30,7 +30,7 @@
           <div class="profile-menu-links">
             <a (click)="goToProfile()">Your account</a>
             <a (click)="goToProfile()">Orders</a>
-            <a [routerLink]="['']">Help</a>
+            <a [routerLink]="['/contact-us']">Help</a>
           </div>
           <div class="seperator"></div>
           <div class="logout-link">
@@ -92,7 +92,7 @@
               <div class="cart-product-details">
                 <h2>{{ item.name }}</h2>
                 <p>
-                  <b>{{ item.price | currency }}</b>
+                  <b>{{ item.price | currency:'EUR' }}</b>
                 </p>
                 <p class="color-gray">Size: {{ item.chosenSize }}</p>
                 <p>quantity: {{ item.quantity }}</p>
@@ -112,14 +112,14 @@
             <div class="summary">
               <div class="cart-delivery">
                 <p>Delivery</p>
-                <p>{{ shippingCost$ | async | currency }}</p>
+                <p>{{ shippingCost$ | async | currency:'EUR' }}</p>
               </div>
               <div class="cart-total">
                 <div>
                   <strong>Total</strong>
                   <p class="color-gray">VAT included</p>
                 </div>
-                <strong>{{ finalTotal$ | async | currency }}</strong>
+                <strong>{{ finalTotal$ | async | currency:'EUR' }}</strong>
               </div>
             </div>
             <a [routerLink]="['/shopping-cart-page']">
