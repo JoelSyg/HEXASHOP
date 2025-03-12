@@ -17,11 +17,12 @@ import { ItemService } from '../services/item-service.service';
 import { ProductBoxComponent } from '../product-box/product-box.component';
 import { fromEvent } from 'rxjs';
 import { debounceTime, tap } from 'rxjs/operators';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-latest-clothing',
   standalone: true,
-  imports: [CommonModule, ProductBoxComponent],
+  imports: [CommonModule, ProductBoxComponent, RouterModule],
   templateUrl: './latest-clothing.component.html',
   styleUrls: ['./latest-clothing.component.scss'],
 })

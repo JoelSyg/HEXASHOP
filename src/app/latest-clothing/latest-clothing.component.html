@@ -21,12 +21,14 @@
         </div>
         <div class="products-div" #scrollContainer>
           @for (item of getItemsByCategory(category.category); track item.id) {
+            <a [routerLink]="['/single-item-page', item.id]">
           <app-product-box
             class="product"
             [itemName]="item.name"
             [itemImage]="item.image"
             [itemPrice]="item.price"
           ></app-product-box>
+            </a>
           }
         </div>
         <div

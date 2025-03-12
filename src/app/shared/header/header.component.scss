@@ -185,6 +185,7 @@ header {
               border: 1px solid black;
               color: white;
               font-size: 16px;
+              font-weight: bold;
               cursor: pointer;
               border-radius: 5px;
               transition: background-color 0.125s ease-in-out;
@@ -340,6 +341,7 @@ header {
                 border: 1px solid black;
                 color: white;
                 font-size: 16px;
+                font-weight: bold;
                 cursor: pointer;
                 border-radius: 5px;
                 margin-top: 16px;
@@ -477,6 +479,7 @@ header {
               cursor: pointer;
               border-radius: 5px;
               margin-top: 16px;
+              font-weight: bold;
 
               &:hover {
                 background-color: rgba(0, 0, 0, 0.55);

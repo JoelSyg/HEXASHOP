@@ -65,6 +65,7 @@
           border: 1px solid black;
           color: white;
           font-size: 16px;
+          font-weight: bold;
           cursor: pointer;
           border-radius: 5px;
           transition: background-color 0.125s ease-in-out;
@@ -118,7 +119,8 @@
     background: none;
     transition: border-color 0.3s ease;
     font-size: 16px;
-
+    color: black;
+    
     &:hover {
       border-color: black;
     }

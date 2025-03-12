@@ -27,11 +27,13 @@
     <div class="products-container">
       <div class="products-div">
         @for (item of casualItems(); track item.id) {
+          <a [routerLink]="['/single-item-page', item.id]">
         <app-product-box
           [itemName]="item.name"
           [itemImage]="item.image"
           [itemPrice]="item.price"
         ></app-product-box>
+          </a>
         }
       </div>
     </div>

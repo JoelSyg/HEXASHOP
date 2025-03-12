@@ -158,6 +158,10 @@
           display: flex;
           gap: 16px;
           align-items: center;
+
+          select {
+            color: black !important;
+          }
         }
 
         .remove-button {
