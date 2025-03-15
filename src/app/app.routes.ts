@@ -15,25 +15,50 @@ import { ProfileComponent } from './profile/profile.component';
 import { CheckoutSuccessComponent } from './checkout-success/checkout-success.component';
 import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { OrdersComponent } from './orders/orders.component';
+import { DetailsComponent } from './details/details.component';
 
 export const routes: Routes = [
-    { path: '', component: MainPageComponent},
-    { path: 'about-us', component: AboutUsComponent},
-    { path: 'mens-clothing', component: CategoryClothingComponent, data: { category: 'mens' }},
-    { path: 'womens-clothing', component: CategoryClothingComponent, data: { category: 'womens' }},
-    { path: 'kids-clothing', component: CategoryClothingComponent, data: { category: 'kids' }},
-    { path: 'single-item-page/:id', component: SingleItemPageComponent},
-    { path: 'shopping-cart-page', component: ShoppingCartPageComponent},
-    { path: 'legal-notice', component: LegalNoticeComponent},
-    { path: 'contact-us', component: ContactUsComponent},
+  { path: '', component: MainPageComponent },
+  { path: 'about-us', component: AboutUsComponent },
+  {
+    path: 'mens-clothing',
+    component: CategoryClothingComponent,
+    data: { category: 'mens' },
+  },
+  {
+    path: 'womens-clothing',
+    component: CategoryClothingComponent,
+    data: { category: 'womens' },
+  },
+  {
+    path: 'kids-clothing',
+    component: CategoryClothingComponent,
+    data: { category: 'kids' },
+  },
+  { path: 'single-item-page/:id', component: SingleItemPageComponent },
+  { path: 'shopping-cart-page', component: ShoppingCartPageComponent },
+  { path: 'legal-notice', component: LegalNoticeComponent },
+  { path: 'contact-us', component: ContactUsComponent },
 
-    { path: 'auth', component: AuthStartComponent },
-    { path: 'auth/login', component: AuthLoginComponent }, 
-    { path: 'auth/register', component: AuthRegisterComponent },
+  { path: 'auth', component: AuthStartComponent },
+  { path: 'auth/login', component: AuthLoginComponent },
+  { path: 'auth/register', component: AuthRegisterComponent },
 
-
-    { path: 'checkout', component: CheckoutComponent, canActivate: [authGuard] },
-    { path: 'checkout-success', component: CheckoutSuccessComponent},
-    { path: 'admin', component: AdminComponent, canActivate: [authGuard, adminGuard] },
-    { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
+  { path: 'checkout', component: CheckoutComponent, canActivate: [authGuard] },
+  { path: 'checkout-success', component: CheckoutSuccessComponent },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [authGuard, adminGuard],
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [authGuard],
+    children: [
+      { path: 'orders', component: OrdersComponent, canActivate: [authGuard] },
+      { path: 'details', component: DetailsComponent, canActivate: [authGuard] },
+    ],
+  },
 ];

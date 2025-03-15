@@ -1,0 +1,29 @@
+.profile-container {
+  height: calc(100vh - 90px);
+  margin: 48px 120px 48px 120px;
+  display: flex;
+  gap: 48px;
+  .profile-navbar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    h3 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    a {
+      text-decoration: none;
+      color: black;
+      margin-left: 16px;
+      font-size: 16px;
+      cursor: pointer;
+
+      &.active {
+        color: #431fa7;
+        font-weight: bold;
+      }
+    }
+  }
+}

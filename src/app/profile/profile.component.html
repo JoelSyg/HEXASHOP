@@ -1,11 +1,22 @@
+<app-header></app-header>
 <div class="profile-container">
-    @if (currentUser()) {
-      <h2>Willkommen, {{ currentUser()?.name }}</h2>
-      <p>Rolle: {{ currentUser()?.role ? 'Admin' : 'User' }}</p>
-      <button (click)="logout()">Logout</button>
-    } @else {
-      <p>Du bist nicht eingeloggt.</p>
-      <a routerLink="/auth">Jetzt anmelden</a>
-    }
+  <div class="profile-navbar">
+    <h3>Your account</h3>
+    <a
+      [routerLink]="['/profile']"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Overview</a
+    >
+    <a [routerLink]="['orders']" routerLinkActive="active">Orders</a>
+    <a [routerLink]="['details']" routerLinkActive="active">Personal details</a>
   </div>
-  
+
+  <!-- @if (currentUser()) {
+      <h2>Welcome, {{ currentUser()?.name }}</h2>
+      <p>role: {{ currentUser()?.role }}</p>
+      <button (click)="logout()">Logout</button>
+    } -->
+  <router-outlet></router-outlet>
+</div>
+<app-footer></app-footer>
