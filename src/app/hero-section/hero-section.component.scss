@@ -141,6 +141,10 @@
   }
 }
 
+.n-c {
+  cursor: not-allowed !important;
+}
+
 @media (max-width: 1300px) {
   .content-wrapper {
     flex-direction: column;
