@@ -215,4 +215,14 @@ export class ShoppingCartService implements OnDestroy {
       window.removeEventListener('popstate', this.handlePopState);
     }
   }
+
+  getFinalTotal(): number {
+    return this.finalTotalSubject.getValue();
+  }
+  
+  getCartItems(): ShopItem[] {
+    return this.cartItemsSubject.getValue();
+  }
+
+  
 }

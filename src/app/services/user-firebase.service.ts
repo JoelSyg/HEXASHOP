@@ -20,6 +20,7 @@ import { Router } from '@angular/router';
 import { ShoppingCartService } from './shopping-cart.service';
 import { ShopItem } from '../types/shop-item.interface';
 import { UserData } from '../types/user.interface';
+import { Order } from '../types/order.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -149,6 +150,7 @@ export class UserFirebaseService {
       name: name || '',
       surname: surname || '',
       cart: [],
+      orders: [],
       createdAt: new Date().toISOString(),
     };
 
@@ -168,6 +170,7 @@ export class UserFirebaseService {
         name: userData.name || '',
         surname: userData.surname || '',
         cart: userData.cart ?? [],
+        orders: userData.orders ?? [],
       });
 
       this.saveUserToStorage();
@@ -207,6 +210,49 @@ export class UserFirebaseService {
     });
 
     return mergedCart;
+  }
+
+  async placeOrder(): Promise<void> {
+    const user = this.currentUser();
+    if (!user) {
+      console.error(user);
+      return;
+    }
+
+    const cartItems = this.cartService.getCartItems();
+    const totalPrice = this.cartService.getFinalTotal();
+
+    if (cartItems.length === 0) {
+      console.error(cartItems);
+      return;
+    }
+
+    const order: Order = {
+      orderDate: new Date().toISOString(),
+      items: cartItems,
+      totalPrice: totalPrice,
+    };
+
+    const userRef = doc(this.firestore, `users/${user.email}`);
+    const userSnap = await getDoc(userRef);
+
+    const userData = userSnap.data() as UserData;
+    const updatedOrders = userData.orders
+      ? [...userData.orders, order]
+      : [order];
+
+    try {
+      await setDoc(userRef, { orders: updatedOrders }, { merge: true });
+
+      this.currentUser.set({
+        ...user,
+        orders: updatedOrders,
+      });
+
+      this.cartService.clearCart();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   private saveUserToStorage() {

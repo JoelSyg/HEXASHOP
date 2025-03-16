@@ -1,1 +1,6 @@
-<h2>Personal details</h2>
+<h2>Personal details <span class="mobile-none">(planned / currently in work)</span></h2>
+  @if (currentUser()) {
+      <p>name: {{ currentUser()?.name }} {{ currentUser()?.surname }}</p>
+      <p>role: {{ currentUser()?.role }}</p>
+
+    }

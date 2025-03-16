@@ -12,11 +12,17 @@
     <a [routerLink]="['details']" routerLinkActive="active">Personal details</a>
   </div>
 
-  <!-- @if (currentUser()) {
-      <h2>Welcome, {{ currentUser()?.name }}</h2>
-      <p>role: {{ currentUser()?.role }}</p>
-      <button (click)="logout()">Logout</button>
-    } -->
+  @if (isOverviewPage()) {
+    <h2 class="mobile-none">(planned / currently in work)</h2>
+  }
+
+  <div class="mobile-profile">
+    <h2>(planned / currently in work)</h2>
+    <app-details></app-details>
+    <app-orders></app-orders>
+  </div>
+
   <router-outlet></router-outlet>
 </div>
+
 <app-footer></app-footer>

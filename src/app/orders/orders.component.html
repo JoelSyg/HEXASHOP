@@ -1,1 +1,28 @@
-<h2>Orders</h2>
+<h2>Orders <span class="mobile-none">(planned / currently in work)</span></h2>
+
+
+@if ( currentUser() ) {
+@if (isLoading()) {
+  <p>Loading orders...</p>
+} @else if (!orders().length) {
+  <p>No orders found.</p>
+} @else {
+  <ul>
+    @for (order of orders(); track order) {
+      <li>
+        <strong>Order Date:</strong> {{ order.orderDate }}<br>
+        <strong>Total Price:</strong> €{{ order.totalPrice.toFixed(2) }}
+
+        <ul>
+          @for (item of order.items; track item) {
+            <li>
+              {{ item.name }} (Size: {{ item.chosenSize }}, Qty: {{ item.quantity }}) - 
+              €{{ item.price.toFixed(2) }}
+            </li>
+          }
+        </ul>
+      </li>
+    }
+  </ul>
+}
+}
