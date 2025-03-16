@@ -17,7 +17,7 @@
     </div>
     <div class="header-right-section">
       <div class="profile-menu" [class.no-hover]="isMobile">
-        <a (click)="goToProfile()">
+        <a [routerLink]="['/profile']">
           <img
             class="user-icon"
             (mousemove)="closeCart()"
@@ -40,10 +40,12 @@
           </div>
           } @else {
           <div class="sign-in-menu">
-            <button class="sign-in-button" (click)="goToProfile()">
+            <a [routerLink]="['/profile']">
+            <button class="sign-in-button">
               Sign In
             </button>
-            <a (click)="goToProfile()">Register now</a>
+            </a>
+            <a [routerLink]="['/profile']">Register now</a>
           </div>
           <div class="seperator"></div>
           <div class="profile-menu-links">
@@ -163,9 +165,9 @@
 
             @if (currentUser()) {
 
-            <a class="c-purple" (click)="logout()">Sign Out</a>
+            <a class="c-purple" [routerLink]="['']" (click)="logout()">Sign Out</a>
             } @else {
-            <a class="c-purple" (click)="goToProfile()">Sign In</a>
+            <a class="c-purple" [routerLink]="['/profile']">Sign In</a>
             }
           </div>
         </div>

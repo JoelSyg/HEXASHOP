@@ -74,10 +74,6 @@ export class HeaderComponent implements OnInit {
     this.shoppingCartService.removeItem(item);
   }
 
-  goToProfile() {
-    this.router.navigate(['/profile']);
-  }
-
   logout() {
     this.userService.logout();
   }
