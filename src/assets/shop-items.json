@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "name": "Men's Item 1",
+    "category": "mens",
+    "new": true,
+    "price": 29.99,
+    "description": "Description for men's item 1.",
+    "image": "./assets/img/mens-fashion-6781827_1280.jpg",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": false,
+      "XL": true,
+      "XXL": true,
+      "ONESIZE": false
+    }
+  },
+  {
+    "id": 1,
+    "name": "Men's Item 1",
+    "category": "mens",
+    "new": true,
+    "price": 29.99,
+    "description": "Description for men's item 1.",
+    "image": "./assets/img/mens-fashion-6781827_1280.jpg",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": false,
+      "XL": true,
+      "XXL": true,
+      "ONESIZE": false
+    }
+  }
+]
