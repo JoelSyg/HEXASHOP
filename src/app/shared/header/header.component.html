@@ -158,6 +158,13 @@
               >About Us</a
             >
             <a [routerLink]="['/contact-us']" (click)="closeMobileMenu()">Contact Us</a>
+
+            @if (currentUser()) {
+
+            <a class="c-purple" (click)="logout()">Sign Out</a>
+            } @else {
+              <a class="c-purple" (click)="goToProfile()">Sign In</a>
+            }
           </div>
         </div>
       </div>
