@@ -1,5 +1,5 @@
 import { Component, inject, signal, computed } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UserFirebaseService } from '../services/user-firebase.service';
 import {
   ReactiveFormsModule,
@@ -18,7 +18,7 @@ import { FirebaseError } from '@angular/fire/app';
   selector: 'app-auth-start',
   templateUrl: './auth-start.component.html',
   styleUrl: './auth-start.component.scss',
-  imports: [ReactiveFormsModule, HeaderComponent, FooterComponent],
+  imports: [ReactiveFormsModule, HeaderComponent, FooterComponent, RouterModule],
 })
 export class AuthStartComponent {
   private router = inject(Router);

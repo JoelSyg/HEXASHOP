@@ -17,7 +17,7 @@
     </form>
 
     <p class="policy-agree">
-      By continuing, you agree to our <a href="">Privacy Policy</a>
+      By continuing, you agree to our <a [routerLink]="['/legal-notice']">Legal Notice</a>
     </p>
 
     <button (click)="checkEmail()" [disabled]="isLoading()">

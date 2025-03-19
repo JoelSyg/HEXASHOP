@@ -1,5 +1,5 @@
 import { Component, inject, signal, computed } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UserFirebaseService } from '../services/user-firebase.service';
 import {
   ReactiveFormsModule,
@@ -18,7 +18,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   selector: 'app-auth-register',
   templateUrl: './auth-register.component.html',
   styleUrl: './auth-register.component.scss',
-  imports: [ReactiveFormsModule, HeaderComponent, FooterComponent],
+  imports: [ReactiveFormsModule, HeaderComponent, FooterComponent, RouterModule],
 })
 export class AuthRegisterComponent {
   private router = inject(Router);
